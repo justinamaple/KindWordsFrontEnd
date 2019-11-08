@@ -26,21 +26,21 @@ class LoginScreen extends Component {
     return (
       <>
         <label>Email: </label>
-        <input type="text" name="email" onChange={ this.handleChange } />
+        <input type="text" name="email" onChange={this.handleChange} />
 
         <label>Password: </label>
-        <input type="password" name="password" onChange={ this.handleChange } />
-        <br/>
-        <button id='create' onClick={ this.createAccount } >Create Account</button>
-        <button id='login' onClick={ this.loginAccount } >Login</button>
+        <input type="password" name="password" onChange={this.handleChange} />
+
+        <button id='create' onClick={this.createAccount} >Create Account</button>
+        <button id='login' onClick={this.loginAccount} >Login</button>
       </>
     )
   }
 
-  render () {
+  render() {
     return (
-      <> 
-        { this.renderLoginForm() } 
+      <>
+        {this.renderLoginForm()}
       </>
     )
   }

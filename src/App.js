@@ -7,8 +7,8 @@ import './App.css'
 const App = (props) => {
   return (
     <Router>
-      <Route exact path="/" component={Desk} />
-      <Route exact path="/login" component={LoginScreen} />
+      <Route exact path='/' component={Desk} />
+      <Route exact path='/login' component={LoginScreen} />
     </Router>
   )
 }

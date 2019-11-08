@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import NavBar from '../components/NavBar';
-import Plane from '../components/Plane';
+import NavBar from '../components/NavBar'
+import Plane from '../components/Plane'
+import Read from '../components/Read'
+import Write from '../components/Write'
 
 class Desk extends Component {
   state = {
@@ -19,21 +21,35 @@ class Desk extends Component {
     const LETTERS_URL = 'http://localhost:3000/letters'
 
     fetch(LETTERS_URL)
-    .then(resp => resp.json())
-    .then(json => {
-      this.setState({letterStack: json})
-    })
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ letterStack: json })
+      })
+  }
+
+  renderWrite = () => {
+    console.log('write')
+    return <Write />
+  }
+
+  renderRead = e => {
+    console.log(e.target.id, this)
+    return <Read />
   }
 
   renderPlanes = () => {
-    return this.state.letterStack.map(letter => <Plane key={ letter.id } letter={ letter } />)
+    return this.state.letterStack.map(letter => {
+      return <Plane key={letter.id} letter={letter} handleClick={this.renderRead} />
+    })
   }
 
   render() {
     return (
       <>
-        { this.renderPlanes() }
-        <NavBar />
+        <NavBar handleWrite={this.renderWrite} handleRead={this.renderRead} />
+        {this.renderPlanes()}
+        <Write />
+        <Read />
       </>
     )
   }

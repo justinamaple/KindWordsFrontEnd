@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import SendPlane from './SendPlane'
 
 class Write extends Component {
   render () {
     return (
-      <h3>This is a Write lol</h3>
+      <div className='card'>
+        <h3>This is a Write lol</h3>
+        <SendPlane />
+      </div>
     )
   }
 }
