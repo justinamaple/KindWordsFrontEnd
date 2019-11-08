@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react'
-import _ from 'lodash'
-import LoginScreen from './LoginScreen';
+import React, { Component } from 'react'
+import NavBar from '../components/NavBar';
+import Plane from '../components/Plane';
 
 class Desk extends Component {
   state = {
@@ -25,11 +25,15 @@ class Desk extends Component {
     })
   }
 
+  renderPlanes = () => {
+    return this.state.letterStack.map(letter => <Plane key={ letter.id } letter={ letter } />)
+  }
+
   render() {
     return (
       <>
-        <LoginScreen />
-        <h3>This is a desk lol</h3>
+        { this.renderPlanes() }
+        <NavBar />
       </>
     )
   }

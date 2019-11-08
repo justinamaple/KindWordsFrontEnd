@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
-import Login from '../components/Login'
-import CreateAccount from '../components/CreateAccount'
 
 class LoginScreen extends Component {
   // Make sure this state matches the form we want
@@ -16,26 +13,35 @@ class LoginScreen extends Component {
     this.setState(change)
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-
+  createAccount = e => {
     console.log(this.state)
+  }
+
+  loginAccount = e => {
+    console.log(this.state)
+  }
+
+  // Refactor into
+  renderLoginForm = () => {
+    return (
+      <>
+        <label>Email: </label>
+        <input type="text" name="email" onChange={ this.handleChange } />
+
+        <label>Password: </label>
+        <input type="password" name="password" onChange={ this.handleChange } />
+        <br/>
+        <button id='create' onClick={ this.createAccount } >Create Account</button>
+        <button id='login' onClick={ this.loginAccount } >Login</button>
+      </>
+    )
   }
 
   render () {
     return (
-      <div>
-        <h3>This is a LoginScreen lol</h3>
-        <form onSubmit={ this.handleSubmit }>
-          <label>Email: </label>
-          <input type="text" name="email" onChange={ this.handleChange } />
-          <label>Password: </label>
-          <input type="text" name="password" onChange={ this.handleChange } />
-          <input type='submit' />
-        </form>
-        <Login />
-        <CreateAccount />
-      </div>
+      <> 
+        { this.renderLoginForm() } 
+      </>
     )
   }
 }

@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 
 class Plane extends Component {
   render () {
     return (
-      <div>
-        <h3>This is a Plane lol</h3>
-      </div>
+      <h6>This is a Plane lol</h6>
     )
   }
 }
