@@ -42,9 +42,8 @@ class Desk extends Component {
   }
 
   fetchLetters = () => {
-    // Call this function on an interval to get more letters
-    // Have it grab the 10 most recent letters this account
-    // has not yet seen
+    // TODO: grab the 10 most recent letters this account
+    // has not yet seen (make a new api on back end)
     const LETTERS_URL = 'http://localhost:3000/letters'
 
     fetch(LETTERS_URL)
@@ -60,7 +59,7 @@ class Desk extends Component {
   }
 
   renderRead = letter => {
-    // Mark the letter as seen for the given account
+    // TODO: mark the letter as seen for the given account
     return <Read letter={letter} />
   }
 
