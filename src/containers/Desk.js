@@ -7,47 +7,73 @@ import Write from '../components/Write'
 class Desk extends Component {
   state = {
     letterStack: [],
-    logged_in: null
+    loggedIn: null,
+    intervalId: null,
+    plane: null
+  }
+
+  startPlanes = () => {
+    const planeInterval = setInterval(this.throwPlane, 5000)
+    this.setState({ intervalId: planeInterval })
+  }
+
+  stopPlanes = () => {
+    clearInterval(this.state.intervalId);
+  }
+
+  throwPlane = () => {
+    if(this.state.letterStack.length === 0) {
+      this.stopPlanes()
+      this.fetchLetters()
+      return;
+    }
+
+    const stack = [...this.state.letterStack]
+    const plane = stack.pop();
+    this.setState({ letterStack: stack, plane: plane })
   }
 
   componentDidMount() {
-    // Fetch the letters and setState using PrevState to update
-    this.fetchLetters();
+    this.fetchLetters()
+  }
+
+  componentWillUnmount() {
+    this.stopPlanes()
   }
 
   fetchLetters = () => {
     // Call this function on an interval to get more letters
-    // Ideally grab 10-20 at a time? Do it every 30 seconds?
+    // Have it grab the 10 most recent letters this account
+    // has not yet seen
     const LETTERS_URL = 'http://localhost:3000/letters'
 
     fetch(LETTERS_URL)
       .then(resp => resp.json())
       .then(json => {
         this.setState({ letterStack: json })
+        this.startPlanes()
       })
   }
 
   renderWrite = () => {
-    console.log('write')
     return <Write />
   }
 
-  renderRead = e => {
-    console.log(e.target.id, this)
-    return <Read />
+  renderRead = letter => {
+    // Mark the letter as seen for the given account
+    return <Read letter={letter} />
   }
 
-  renderPlanes = () => {
-    return this.state.letterStack.map(letter => {
-      return <Plane key={letter.id} letter={letter} handleClick={this.renderRead} />
-    })
+  renderPlane = () => {
+    if (this.state.plane)
+      return <Plane key={this.state.plane.id} plane={this.state.plane} handleClick={this.renderRead} />
   }
 
   render() {
     return (
       <>
         <NavBar handleWrite={this.renderWrite} handleRead={this.renderRead} />
-        {this.renderPlanes()}
+        {this.renderPlane()}
         <Write />
         <Read />
       </>
