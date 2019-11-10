@@ -3,11 +3,18 @@ import NavBar from '../components/NavBar'
 import Plane from '../components/Plane'
 import Read from '../components/Read'
 import Write from '../components/Write'
+import Button from '../components/Button'
+import Icon from '../components/Icon'
+import Journal from '../components/Journal'
+
+//props - accountId
 
 class Desk extends Component {
   state = {
     letterStack: [],
-    logged_in: null
+    isWrite: false,
+    isRead: false,
+    isJournal: false
   }
 
   componentDidMount() {
@@ -27,32 +34,60 @@ class Desk extends Component {
       })
   }
 
-  renderWrite = () => {
-    console.log('write')
-    return <Write />
-  }
-
-  renderRead = e => {
-    console.log(e.target.id, this)
-    return <Read />
-  }
-
-  renderPlanes = () => {
-    return this.state.letterStack.map(letter => {
-      return <Plane key={letter.id} letter={letter} handleClick={this.renderRead} />
+  handleWriteClick = () => {
+    this.setState({
+      isWrite: true
     })
   }
 
-  render() {
+  renderWrite = () => {
     return (
       <>
-        <NavBar handleWrite={this.renderWrite} handleRead={this.renderRead} />
-        {this.renderPlanes()}
-        <Write />
-        <Read />
+        <Write accountId={this.props.accountId} handleCloseClick={this.handleCloseClick} />
+        <Icon />
+        <Button onClick={this.handleCloseClick} className='ui button'>Close</Button>
       </>
     )
   }
+
+  handleJournalClick = () => {
+    this.setState({
+      isJournal: true
+    })
+  }
+
+  renderJournal = () => {
+    return (
+      <>
+        <Journal />
+        <Button onClick={this.handleCloseClick} className='ui button'>Close</Button>
+      </>
+    )
+  }
+
+  handleCloseClick = () => {
+    this.setState({
+      isWrite: null,
+      isRead: null,
+      isJournal: null
+    })
+  }
+
+
+  render() {
+
+    const { letterStack, isWrite, isRead, isJournal } = this.state
+
+    return (
+      <>
+        <NavBar handleWriteClick={this.handleWriteClick} handleJournalClick={this.handleJournalClick} /> 
+        { isWrite ? this.renderWrite() : null }
+        { isRead ? this.renderRead() : null }
+        { isJournal ? this.renderJournal() : null }
+      </>
+    )
+  }
+
 }
 
 export default Desk
