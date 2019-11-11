@@ -1,13 +1,11 @@
 import React from 'react'
 
-const Icon = (props) => {
- 
-   return (
-      <div>
-        Icon signature goes here!
-      </div>
+const Icon = props => {
+  return (
+    <div>
+      <span role="img">♥</span>
+    </div>
   )
-
 }
 
 export default Icon

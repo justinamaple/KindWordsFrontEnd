@@ -18,16 +18,16 @@ class Desk extends Component {
   }
 
   componentDidMount() {
-    this.fetchLetters();
+    this.fetchLetters()
   }
 
   fetchLetters = () => {
     fetch(LETTERS_URL)
       .then(resp => resp.json())
       .then(json => {
-        this.setState({ 
+        this.setState({
           letterStack: json,
-          plane: json[Math.round(Math.random() * 10)] //this is just for testing!
+          plane: json[Math.round(Math.random() * 10)]
         })
       })
   }
@@ -40,7 +40,10 @@ class Desk extends Component {
 
   renderWrite = () => {
     return (
-      <Write accountId={this.props.accountId} handleCloseClick={this.handleCloseClick} />
+      <Write
+        accountId={this.props.accountId}
+        handleCloseClick={this.handleCloseClick}
+      />
     )
   }
 
@@ -51,31 +54,34 @@ class Desk extends Component {
     this.incrementLetterViews(letter)
   }
 
-  incrementLetterViews = (letter) => {
+  incrementLetterViews = letter => {
     fetch(LETTERS_URL + `/${letter.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json'
       },
       body: JSON.stringify({
-        num_views: letter.num_views + 1 
+        num_views: letter.num_views + 1
       })
     })
-    .then(res => res.json())
-    .then(console.log)
+      .then(res => res.json())
+      .then(console.log)
   }
 
-  renderRead = (letter) => {
-
-    return (
-      <Read letter={letter} handleWriteClick={this.handleWriteClick} />
-    )
+  renderRead = letter => {
+    return <Read letter={letter} handleWriteClick={this.handleWriteClick} />
   }
 
-  renderCreateResponse = (letter) => {
+  renderCreateResponse = letter => {
     return (
-      <CreateResponse accountId={this.props.accountId} letter={letter} isRead={true} isWrite={true} handleCloseClick={this.handleCloseClick}/>
+      <CreateResponse
+        accountId={this.props.accountId}
+        letter={letter}
+        isRead={true}
+        isWrite={true}
+        handleCloseClick={this.handleCloseClick}
+      />
     )
   }
 
@@ -86,9 +92,7 @@ class Desk extends Component {
   }
 
   renderJournal = () => {
-    return (
-      <Journal />
-    )
+    return <Journal />
   }
 
   handleCloseClick = () => {
@@ -96,33 +100,38 @@ class Desk extends Component {
       isWrite: false,
       isRead: false,
       isJournal: false,
-      plane: this.state.letterStack[Math.round(Math.random() * 10)] //for testing purposes
+      plane: this.state.letterStack[Math.round(Math.random() * 10)]
     })
   }
 
-  
   isEmptyDesk = () => {
     const { isWrite, isRead, isJournal } = this.state
     return !isWrite && !isRead && !isJournal
   }
 
-
   render() {
-  
     const { plane, isWrite, isRead, isJournal } = this.state
 
     return (
       <>
-        <NavBar isWrite={isWrite} isRead={isRead} isJournal={isJournal} handleWriteClick={this.handleWriteClick} handleJournalClick={this.handleJournalClick} handleCloseClick={this.handleCloseClick} /> 
-        { isWrite && !isRead ? this.renderWrite() : null }
-        { isRead && !isWrite ? this.renderRead(plane) : null }
-        { isWrite && isRead ? this.renderCreateResponse(plane) : null }
-        { isJournal ? this.renderJournal() : null }
-        { plane && this.isEmptyDesk() ? <Plane handlePlaneClick={this.handlePlaneClick} plane={plane}/> : null } 
+        <NavBar
+          isWrite={isWrite}
+          isRead={isRead}
+          isJournal={isJournal}
+          handleWriteClick={this.handleWriteClick}
+          handleJournalClick={this.handleJournalClick}
+          handleCloseClick={this.handleCloseClick}
+        />
+        {isWrite && !isRead ? this.renderWrite() : null}
+        {isRead && !isWrite ? this.renderRead(plane) : null}
+        {isWrite && isRead ? this.renderCreateResponse(plane) : null}
+        {isJournal ? this.renderJournal() : null}
+        {plane && this.isEmptyDesk() ? (
+          <Plane handlePlaneClick={this.handlePlaneClick} plane={plane} />
+        ) : null}
       </>
     )
   }
-
 }
 
 export default Desk
