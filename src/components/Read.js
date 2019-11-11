@@ -4,7 +4,7 @@ import Icon from './Icon'
 
 class Read extends Component {
   render() {
-    const { letter, handleWriteClick, isWrite, icon } = this.props
+    const { letter, handleClick, isWrite, icon } = this.props
 
     return (
       <div className='ui centered card'>
@@ -15,7 +15,7 @@ class Read extends Component {
           </span>
         </div>
         {isWrite ? null : (
-          <Button onClick={handleWriteClick} className='ui button'>
+          <Button onClick={handleClick} className='ui button'>
             Respond to Letter
           </Button>
         )}
