@@ -1,15 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Button from './Button'
 
-class Plane extends Component {
-  render () {
-
-    const { handlePlaneClick, plane } = this.props
-
-    return (
-      <Button className='ui button' onClick={(e) => handlePlaneClick(e, plane)}><span role='img'> ✈️ </span></Button>
-    )
-  }
+const Plane = ({ handleClick, plane }) => {
+  return (
+    <Button className='ui button plane' onClick={e => handleClick(e, plane)}>
+      <span role='img'> ✈️</span> {plane.content}{' '}
+    </Button>
+  )
 }
 
 export default Plane
