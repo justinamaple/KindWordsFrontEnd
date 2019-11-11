@@ -27,7 +27,7 @@ class Desk extends Component {
       .then(json => {
         this.setState({
           letterStack: json,
-          plane: json[Math.round(Math.random() * 10)]
+          plane: json[Math.round(Math.random() * 10)] //this is just for testing!
         })
       })
   }
@@ -100,7 +100,7 @@ class Desk extends Component {
       isWrite: false,
       isRead: false,
       isJournal: false,
-      plane: this.state.letterStack[Math.round(Math.random() * 10)]
+      plane: this.state.letterStack[Math.round(Math.random() * 10)] //for testing purposes
     })
   }
 
