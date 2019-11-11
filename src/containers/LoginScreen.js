@@ -31,18 +31,18 @@ class LoginScreen extends Component {
         <label>Password: </label>
         <input type="password" name="password" onChange={this.handleChange} />
 
-        <button id='create' onClick={this.createAccount} >Create Account</button>
-        <button id='login' onClick={this.loginAccount} >Login</button>
+        <button id="create" onClick={this.createAccount}>
+          Create Account
+        </button>
+        <button id="login" onClick={this.loginAccount}>
+          Login
+        </button>
       </>
     )
   }
 
   render() {
-    return (
-      <>
-        {this.renderLoginForm()}
-      </>
-    )
+    return <>{this.renderLoginForm()}</>
   }
 }
 

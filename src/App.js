@@ -4,11 +4,19 @@ import Desk from './containers/Desk'
 import LoginScreen from './containers/LoginScreen'
 import './App.css'
 
-const App = (props) => {
+const App = props => {
+  state = {
+    loginID: '',
+    icon: ''
+  }
+
+  loginFrontEnd = () => {
+    //asdf
+  }
   return (
     <Router>
-      <Route exact path='/' component={Desk} />
-      <Route exact path='/login' component={LoginScreen} />
+      <Route exact path="/" component={Desk} />
+      <Route exact path="/login" component={LoginScreen} />
     </Router>
   )
 }
