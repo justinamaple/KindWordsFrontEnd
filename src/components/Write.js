@@ -66,12 +66,13 @@ class Write extends Component {
           <div className='ui form'>
             <div className='field'>
               <textarea
-                rows='20'
+                rows='10'
+                maxLength='200'
                 onChange={this.handleTextChange}
                 placeholder={
                   isRead
-                    ? 'Write your response here!'
-                    : 'Write your letter here!'
+                    ? 'Write your response here! ✎'
+                    : 'Write your letter here! ✎'
                 }
                 value={this.state.content}
               ></textarea>

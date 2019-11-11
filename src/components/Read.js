@@ -4,14 +4,14 @@ import Icon from './Icon'
 
 class Read extends Component {
   render() {
-    const { letter, handleWriteClick, isWrite, icon } = this.props
+    const { letter, handleWriteClick, isWrite } = this.props
 
     return (
       <div className='ui centered card'>
         <div className='content'>
           <p>{letter.content}</p>
           <span className='right floated icon'>
-            <Icon icon={icon} />
+            <Icon icon={letter.icon} />
           </span>
         </div>
         {isWrite ? null : (
