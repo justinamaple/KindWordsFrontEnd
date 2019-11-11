@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Button from './Button'
+import Icon from './Icon'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
 
@@ -10,14 +11,13 @@ class Write extends Component {
   }
 
   handleTextChange = (e) => {
-    console.log("typing letter!")
     this.setState({
       content: e.target.value
     })
   }
 
   handleSubmitLetter = () => {
-    
+    const { handleCloseClick, accountId } = this.props
     fetch(LETTERS_URL, {
       method: 'POST',
       headers: {
@@ -26,16 +26,16 @@ class Write extends Component {
       },
       body: JSON.stringify({
         content: this.state.content,
-        account_id: this.props.accountId
+        account_id: accountId
       })
     })
     .then(res => res.json())
     .then(console.log)
-    this.props.handleCloseClick()
+
+    handleCloseClick()
   }
 
   handleSubmitResponse = () => {
-
     const { letterId, handleCloseClick, accountId } = this.props
   
     fetch(LETTERS_URL + `/${letterId}/responses`, {
@@ -68,6 +68,7 @@ class Write extends Component {
           </div>
         </div>
         <Button onClick={ isRead ? this.handleSubmitResponse : this.handleSubmitLetter } className='ui button'>Send</Button>
+        <Icon />
       </div>
     )
   }

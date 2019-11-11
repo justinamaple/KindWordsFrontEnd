@@ -6,12 +6,12 @@ class CreateResponse extends Component {
 
   render() {
    
-    const { letter, isWrite, isRead, handleCloseClick, accountId } = this.props
+    const { letter, handleCloseClick, accountId } = this.props
 
     return (
       <div>
-        <Write accountId={accountId} letterId={letter.id} isRead={isRead} handleCloseClick={handleCloseClick}/>
-        <Read letter={letter} isWrite={isWrite}/>
+        <Write accountId={accountId} letterId={letter.id} isRead={true} handleCloseClick={handleCloseClick}/>
+        <Read letter={letter} isWrite={true}/>
       </div>
     )
   }

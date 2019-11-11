@@ -3,7 +3,6 @@ import NavBar from '../components/NavBar'
 import Plane from '../components/Plane'
 import Read from '../components/Read'
 import Write from '../components/Write'
-import Icon from '../components/Icon'
 import Journal from '../components/Journal'
 import CreateResponse from '../components/CreateResponse'
 
@@ -19,14 +18,10 @@ class Desk extends Component {
   }
 
   componentDidMount() {
-    // Fetch the letters and setState using PrevState to update
     this.fetchLetters();
   }
 
   fetchLetters = () => {
-    // Call this function on an interval to get more letters
-    // Ideally grab 10-20 at a time? Do it every 30 seconds?
-
     fetch(LETTERS_URL)
       .then(resp => resp.json())
       .then(json => {
@@ -45,15 +40,11 @@ class Desk extends Component {
 
   renderWrite = () => {
     return (
-      <>
-        <Write accountId={this.props.accountId} handleCloseClick={this.handleCloseClick} isRead={this.state.isRead} />
-        <Icon />
-      </>
+      <Write accountId={this.props.accountId} handleCloseClick={this.handleCloseClick} />
     )
   }
 
-  handlePlaneClick = (e, letter) => {
-    e.persist()
+  handlePlaneClick = (_e, letter) => {
     this.setState({
       isRead: true
     })
@@ -71,21 +62,20 @@ class Desk extends Component {
         num_views: letter.num_views + 1 
       })
     })
+    .then(res => res.json())
+    .then(console.log)
   }
 
   renderRead = (letter) => {
+
     return (
-      <>
-        <Read letter={letter} handleWriteClick={this.handleWriteClick} isWrite={this.state.isWrite}/>
-      </>
+      <Read letter={letter} handleWriteClick={this.handleWriteClick} />
     )
   }
 
   renderCreateResponse = (letter) => {
     return (
-      <>
-        <CreateResponse accountId={this.props.accountId} letter={letter} isRead={this.state.isRead} isWrite={this.state.isWrite} handleCloseClick={this.handleCloseClick}/>
-      </>
+      <CreateResponse accountId={this.props.accountId} letter={letter} isRead={true} isWrite={true} handleCloseClick={this.handleCloseClick}/>
     )
   }
 
@@ -97,9 +87,7 @@ class Desk extends Component {
 
   renderJournal = () => {
     return (
-      <>
-        <Journal />
-      </>
+      <Journal />
     )
   }
 
@@ -108,11 +96,12 @@ class Desk extends Component {
       isWrite: false,
       isRead: false,
       isJournal: false,
-      plane: this.state.letterStack[Math.round(Math.random() * 10)]
+      plane: this.state.letterStack[Math.round(Math.random() * 10)] //for testing purposes
     })
   }
 
-  isHomeScreen = () => {
+  
+  isEmptyDesk = () => {
     const { isWrite, isRead, isJournal } = this.state
     return !isWrite && !isRead && !isJournal
   }
@@ -129,7 +118,7 @@ class Desk extends Component {
         { isRead && !isWrite ? this.renderRead(plane) : null }
         { isWrite && isRead ? this.renderCreateResponse(plane) : null }
         { isJournal ? this.renderJournal() : null }
-        { plane && this.isHomeScreen() ? <Plane handlePlaneClick={this.handlePlaneClick} plane={plane}/> : null } 
+        { plane && this.isEmptyDesk() ? <Plane handlePlaneClick={this.handlePlaneClick} plane={plane}/> : null } 
       </>
     )
   }
