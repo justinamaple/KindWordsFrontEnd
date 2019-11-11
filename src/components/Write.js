@@ -61,7 +61,7 @@ class Write extends Component {
     const { isRead } = this.props
 
     return (
-      <div className='card'>
+      <div className='ui card'>
         <div className="ui form">
           <div className="field">
             <textarea onChange={this.handleTextChange} placeholder={ isRead ? "Write your response here!" : "Write your letter here!" } value={this.state.content}></textarea>
