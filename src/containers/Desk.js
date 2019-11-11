@@ -3,7 +3,7 @@ import NavBar from '../components/NavBar'
 import Plane from '../components/Plane'
 import Read from '../components/Read'
 import Write from '../components/Write'
-import Journal from '../components/Journal'
+import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
