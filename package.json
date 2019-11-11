@@ -45,7 +45,9 @@
     "semantic-ui-less": "^2.4.1",
     "semantic-ui-react": "^0.88.1"
   },
-  "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+  "prettier": {
+    "jsxSingleQuote": true,
+    "semi": false,
+    "singleQuote": true
   }
 }

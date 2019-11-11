@@ -24,18 +24,18 @@ class Desk extends Component {
   }
 
   stopPlanes = () => {
-    clearInterval(this.state.intervalId);
+    clearInterval(this.state.intervalId)
   }
 
   throwPlane = () => {
     if (this.state.letterStack.length === 0) {
       this.stopPlanes()
       this.fetchLetters()
-      return;
+      return
     }
 
     const stack = [...this.state.letterStack]
-    const plane = stack.pop();
+    const plane = stack.pop()
     this.setState({ letterStack: stack, plane: plane })
   }
 
@@ -138,7 +138,7 @@ class Desk extends Component {
       isRead: false,
       isJournal: false
     })
-    this.startPlanes();
+    this.startPlanes()
   }
 
   isEmptyDesk = () => {
