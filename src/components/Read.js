@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
+import Button from './Button'
 
 class Read extends Component {
+
   render () {
+
+    const { letter, handleWriteClick, isWrite } = this.props
+
     return (
       <div className='card'>
-        <h3>This is a Read lol</h3>
+        <p>{letter.content}</p>
+        { isWrite ? null : <Button onClick={handleWriteClick} className='ui button'>Respond to Letter</Button> }
       </div>
     )
   }

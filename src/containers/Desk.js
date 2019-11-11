@@ -3,11 +3,10 @@ import NavBar from '../components/NavBar'
 import Plane from '../components/Plane'
 import Read from '../components/Read'
 import Write from '../components/Write'
-import Button from '../components/Button'
 import Icon from '../components/Icon'
 import Journal from '../components/Journal'
+import CreateResponse from '../components/CreateResponse'
 
-//props - accountId
 const LETTERS_URL = 'http://localhost:3000/letters'
 
 class Desk extends Component {
@@ -77,8 +76,15 @@ class Desk extends Component {
   renderRead = (letter) => {
     return (
       <>
-        <Read letter={letter} />
-        {this.state.isWrite ? null : <Button onClick={this.handleWriteClick} className='ui button'>Respond to Letter</Button>}
+        <Read letter={letter} handleWriteClick={this.handleWriteClick} isWrite={this.state.isWrite}/>
+      </>
+    )
+  }
+
+  renderCreateResponse = (letter) => {
+    return (
+      <>
+        <CreateResponse accountId={this.props.accountId} letter={letter} isRead={this.state.isRead} isWrite={this.state.isWrite} handleCloseClick={this.handleCloseClick}/>
       </>
     )
   }
@@ -93,31 +99,37 @@ class Desk extends Component {
     return (
       <>
         <Journal />
-        <Button onClick={this.handleCloseClick} className='ui button'>Close</Button>
       </>
     )
   }
 
   handleCloseClick = () => {
     this.setState({
-      isWrite: null,
-      isRead: null,
-      isJournal: null
+      isWrite: false,
+      isRead: false,
+      isJournal: false,
+      plane: this.state.letterStack[Math.round(Math.random() * 10)]
     })
+  }
+
+  isHomeScreen = () => {
+    const { isWrite, isRead, isJournal } = this.state
+    return !isWrite && !isRead && !isJournal
   }
 
 
   render() {
-
+  
     const { plane, isWrite, isRead, isJournal } = this.state
 
     return (
       <>
         <NavBar isWrite={isWrite} isRead={isRead} isJournal={isJournal} handleWriteClick={this.handleWriteClick} handleJournalClick={this.handleJournalClick} handleCloseClick={this.handleCloseClick} /> 
-        { isWrite ? this.renderWrite() : null }
-        { isRead ? this.renderRead(plane) : null }
+        { isWrite && !isRead ? this.renderWrite() : null }
+        { isRead && !isWrite ? this.renderRead(plane) : null }
+        { isWrite && isRead ? this.renderCreateResponse(plane) : null }
         { isJournal ? this.renderJournal() : null }
-        { plane ? <Plane handlePlaneClick={this.handlePlaneClick} plane={plane}/> : null }
+        { plane && this.isHomeScreen() ? <Plane handlePlaneClick={this.handlePlaneClick} plane={plane}/> : null } 
       </>
     )
   }
