@@ -58,7 +58,9 @@ class Desk extends Component {
 
   handleWriteClick = () => {
     this.setState({
-      isWrite: true
+      isWrite: true,
+      isRead: false,
+      isJournal: false
     })
   }
 
@@ -68,7 +70,7 @@ class Desk extends Component {
       <Write
         accountId={this.props.accountId}
         icon={this.props.icon}
-        handleCloseClick={this.handleCloseClick}
+        handleCloseClick={this.clearDesk}
       />
     )
   }
@@ -97,7 +99,15 @@ class Desk extends Component {
 
   renderRead = letter => {
     this.stopPlanes()
-    return <Read letter={letter} handleWriteClick={this.handleWriteClick} />
+    return <Read letter={letter} handleClick={this.handleRespondClick} />
+  }
+
+  handleRespondClick = () => {
+    this.setState({
+      isJournal: false,
+      isRead: true,
+      isWrite: true
+    })
   }
 
   renderCreateResponse = letter => {
@@ -108,14 +118,16 @@ class Desk extends Component {
         letter={letter}
         isRead={true}
         isWrite={true}
-        handleCloseClick={this.handleCloseClick}
+        handleCloseClick={this.clearDesk}
       />
     )
   }
 
   handleJournalClick = () => {
     this.setState({
-      isJournal: true
+      isJournal: true,
+      isRead: false,
+      isWrite: false
     })
   }
 
@@ -131,10 +143,10 @@ class Desk extends Component {
 
   renderJournal = () => {
     this.stopPlanes()
-    return <Journal />
+    return <Journal handleCloseClick={this.clearDesk} />
   }
 
-  handleCloseClick = () => {
+  clearDesk = () => {
     this.setState({
       isWrite: false,
       isRead: false,
@@ -154,12 +166,8 @@ class Desk extends Component {
     return (
       <>
         <NavBar
-          isWrite={isWrite}
-          isRead={isRead}
-          isJournal={isJournal}
           handleWriteClick={this.handleWriteClick}
           handleJournalClick={this.handleJournalClick}
-          handleCloseClick={this.handleCloseClick}
         />
         {isWrite && !isRead ? this.renderWrite() : null}
         {isRead && !isWrite ? this.renderRead(plane) : null}

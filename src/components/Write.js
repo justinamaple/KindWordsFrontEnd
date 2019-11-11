@@ -58,7 +58,7 @@ class Write extends Component {
   }
 
   render() {
-    const { isRead, icon } = this.props
+    const { isRead, icon, handleCloseClick } = this.props
 
     return (
       <div className='ui centered card'>
@@ -82,12 +82,23 @@ class Write extends Component {
             <Icon icon={icon} />
           </span>
         </div>
-        <Button
-          onClick={isRead ? this.handleSubmitResponse : this.handleSubmitLetter}
-          className='ui centered button'
-        >
-          Send
-        </Button>
+        <div className='ui two item menu'>
+          <div className='item'>
+            <Button
+              onClick={
+                isRead ? this.handleSubmitResponse : this.handleSubmitLetter
+              }
+              className='ui button'
+            >
+              Send
+            </Button>
+          </div>
+          <div className='item'>
+            <Button onClick={handleCloseClick} className='ui button'>
+              Close
+            </Button>
+          </div>
+        </div>
       </div>
     )
   }
