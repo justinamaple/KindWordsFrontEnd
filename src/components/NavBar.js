@@ -14,16 +14,16 @@ class NavBar extends Component {
 
     return isWrite || isRead || isJournal ? (
       <nav>
-        <Button onClick={handleCloseClick} className="ui button">
+        <Button onClick={handleCloseClick} className='ui button'>
           Close
         </Button>
       </nav>
     ) : (
       <nav>
-        <Button onClick={handleWriteClick} className="ui button">
+        <Button onClick={handleWriteClick} className='ui button'>
           Write Letter
         </Button>
-        <Button onClick={handleJournalClick} className="ui button">
+        <Button onClick={handleJournalClick} className='ui button'>
           Read Journal
         </Button>
       </nav>

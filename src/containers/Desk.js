@@ -14,21 +14,52 @@ class Desk extends Component {
     isWrite: false,
     isRead: false,
     isJournal: false,
+    intervalId: null,
     plane: null
+  }
+
+  startPlanes = () => {
+    const planeInterval = setInterval(this.throwPlane, 5000)
+    this.setState({ intervalId: planeInterval })
+  }
+
+  stopPlanes = () => {
+    clearInterval(this.state.intervalId)
+  }
+
+  throwPlane = () => {
+    if (this.state.letterStack.length === 0) {
+      this.stopPlanes()
+      this.fetchLetters()
+      return
+    }
+
+    const stack = [...this.state.letterStack]
+    const plane = stack.pop()
+    this.setState({ letterStack: stack, plane: plane })
   }
 
   componentDidMount() {
     this.fetchLetters()
   }
 
+  componentWillUnmount() {
+    this.stopPlanes()
+  }
+
   fetchLetters = () => {
     fetch(LETTERS_URL)
       .then(resp => resp.json())
       .then(json => {
+<<<<<<< HEAD
         this.setState({
           letterStack: json,
           plane: json[Math.round(Math.random() * 10)] //this is just for testing!
         })
+=======
+        this.setState({ letterStack: json })
+        this.startPlanes()
+>>>>>>> 29c86c87b2fe00ebc2c6742953ee14a881bb55a2
       })
   }
 
@@ -39,6 +70,7 @@ class Desk extends Component {
   }
 
   renderWrite = () => {
+    this.stopPlanes()
     return (
       <Write
         accountId={this.props.accountId}
@@ -70,6 +102,7 @@ class Desk extends Component {
   }
 
   renderRead = letter => {
+    this.stopPlanes()
     return <Read letter={letter} handleWriteClick={this.handleWriteClick} />
   }
 
@@ -91,7 +124,18 @@ class Desk extends Component {
     })
   }
 
+  renderPlane = () => {
+    return (
+      <Plane
+        key={this.state.plane.id}
+        plane={this.state.plane}
+        handleClick={this.handlePlaneClick}
+      />
+    )
+  }
+
   renderJournal = () => {
+    this.stopPlanes()
     return <Journal />
   }
 
@@ -99,9 +143,14 @@ class Desk extends Component {
     this.setState({
       isWrite: false,
       isRead: false,
+<<<<<<< HEAD
       isJournal: false,
       plane: this.state.letterStack[Math.round(Math.random() * 10)] //for testing purposes
+=======
+      isJournal: false
+>>>>>>> 29c86c87b2fe00ebc2c6742953ee14a881bb55a2
     })
+    this.startPlanes()
   }
 
   isEmptyDesk = () => {
@@ -126,9 +175,7 @@ class Desk extends Component {
         {isRead && !isWrite ? this.renderRead(plane) : null}
         {isWrite && isRead ? this.renderCreateResponse(plane) : null}
         {isJournal ? this.renderJournal() : null}
-        {plane && this.isEmptyDesk() ? (
-          <Plane handlePlaneClick={this.handlePlaneClick} plane={plane} />
-        ) : null}
+        {plane && this.isEmptyDesk() ? this.renderPlane() : null}
       </>
     )
   }

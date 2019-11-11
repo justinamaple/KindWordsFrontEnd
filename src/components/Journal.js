@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 class Journal extends Component {
-  render () {
+  render() {
     return (
       <div>
         <h3>This is your journal!</h3>
