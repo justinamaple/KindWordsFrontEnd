@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Icon = props => {
+const Icon = ({ icon }) => {
   return (
     <div>
-      <span role='img'>♥</span>
+      <span role='img'>{icon}</span>
     </div>
   )
 }

@@ -16,7 +16,7 @@ class Write extends Component {
   }
 
   handleSubmitLetter = () => {
-    const { handleCloseClick, accountId } = this.props
+    const { handleCloseClick, accountId, icon } = this.props
     fetch(LETTERS_URL, {
       method: 'POST',
       headers: {
@@ -25,7 +25,8 @@ class Write extends Component {
       },
       body: JSON.stringify({
         content: this.state.content,
-        account_id: accountId
+        account_id: accountId,
+        icon: icon
       })
     })
       .then(res => res.json())
@@ -35,7 +36,7 @@ class Write extends Component {
   }
 
   handleSubmitResponse = () => {
-    const { letterId, handleCloseClick, accountId } = this.props
+    const { letterId, handleCloseClick, accountId, icon } = this.props
 
     fetch(LETTERS_URL + `/${letterId}/responses`, {
       method: 'POST',
@@ -46,7 +47,8 @@ class Write extends Component {
       body: JSON.stringify({
         content: this.state.content,
         letter_id: letterId,
-        account_id: accountId
+        account_id: accountId,
+        icon: icon
       })
     })
       .then(res => res.json())
@@ -56,7 +58,7 @@ class Write extends Component {
   }
 
   render() {
-    const { isRead } = this.props
+    const { isRead, icon } = this.props
 
     return (
       <div className='ui centered card'>
@@ -76,7 +78,7 @@ class Write extends Component {
             </div>
           </div>
           <span className='right floated icon'>
-            <Icon />
+            <Icon icon={icon} />
           </span>
         </div>
         <Button

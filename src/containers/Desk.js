@@ -51,15 +51,8 @@ class Desk extends Component {
     fetch(LETTERS_URL)
       .then(resp => resp.json())
       .then(json => {
-<<<<<<< HEAD
-        this.setState({
-          letterStack: json,
-          plane: json[Math.round(Math.random() * 10)] //this is just for testing!
-        })
-=======
         this.setState({ letterStack: json })
         this.startPlanes()
->>>>>>> 29c86c87b2fe00ebc2c6742953ee14a881bb55a2
       })
   }
 
@@ -74,6 +67,7 @@ class Desk extends Component {
     return (
       <Write
         accountId={this.props.accountId}
+        icon={this.props.icon}
         handleCloseClick={this.handleCloseClick}
       />
     )
@@ -110,6 +104,7 @@ class Desk extends Component {
     return (
       <CreateResponse
         accountId={this.props.accountId}
+        icon={this.props.icon}
         letter={letter}
         isRead={true}
         isWrite={true}
@@ -143,12 +138,7 @@ class Desk extends Component {
     this.setState({
       isWrite: false,
       isRead: false,
-<<<<<<< HEAD
-      isJournal: false,
-      plane: this.state.letterStack[Math.round(Math.random() * 10)] //for testing purposes
-=======
       isJournal: false
->>>>>>> 29c86c87b2fe00ebc2c6742953ee14a881bb55a2
     })
     this.startPlanes()
   }
