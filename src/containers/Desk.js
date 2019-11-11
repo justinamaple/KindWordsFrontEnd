@@ -118,8 +118,13 @@ class Desk extends Component {
   }
 
   renderPlane = () => {
-    if (this.state.plane)
-      return <Plane key={this.state.plane.id} plane={this.state.plane} handleClick={this.handlePlaneClick} />
+    return (
+      <Plane
+        key={this.state.plane.id}
+        plane={this.state.plane}
+        handleClick={this.handlePlaneClick}
+      />
+    )
   }
 
   renderJournal = () => {
@@ -158,7 +163,7 @@ class Desk extends Component {
         {isRead && !isWrite ? this.renderRead(plane) : null}
         {isWrite && isRead ? this.renderCreateResponse(plane) : null}
         {isJournal ? this.renderJournal() : null}
-        {this.isEmptyDesk() ? this.renderPlane() : null}
+        {plane && this.isEmptyDesk() ? this.renderPlane() : null}
       </>
     )
   }
