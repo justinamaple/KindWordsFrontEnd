@@ -44,5 +44,8 @@
     "prettier": "^1.19.1",
     "semantic-ui-less": "^2.4.1",
     "semantic-ui-react": "^0.88.1"
+  },
+  "jest": {
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
   }
 }
