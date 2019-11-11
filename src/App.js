@@ -1,24 +1,39 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Desk from './containers/Desk'
 import LoginScreen from './containers/LoginScreen'
 import './App.css'
 
-const App = props => {
+class App extends Component {
   state = {
-    loginID: '',
+    accountId: '',
     icon: ''
   }
 
-  loginFrontEnd = () => {
-    //asdf
+  setAccountId = accountId => {
+    this.setState({ accountId })
   }
-  return (
-    <Router>
-      <Route exact path="/" component={Desk} />
-      <Route exact path="/login" component={LoginScreen} />
-    </Router>
-  )
+
+  signOut = () => {
+    this.setState({ accountId: '' })
+  }
+
+  render() {
+    return (
+      <Router>
+        <Route
+          exact
+          path='/'
+          render={props => <Desk {...props} accountId={this.state.accountId} />}
+        />
+        <Route
+          exact
+          path='/login'
+          render={() => <LoginScreen setAccountId={this.setAccountId} />}
+        />
+      </Router>
+    )
+  }
 }
 
 export default App

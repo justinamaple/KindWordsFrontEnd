@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import LoginScreen from 'LoginScreen'
 
 describe('login component', () => {
   it('renders login form', () => {
