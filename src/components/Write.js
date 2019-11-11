@@ -33,11 +33,12 @@ class Write extends Component {
   }
 
   render () {
+
     return (
       <div className='card'>
         <div className="ui form">
           <div className="field">
-            <textarea onChange={this.handleTextChange} placeholder="Write Your Letter Here!" value={this.state.content}></textarea>
+            <textarea onChange={this.handleTextChange} placeholder={this.props.isRead ? "Write your response here!" : "Write your letter here!"} value={this.state.content}></textarea>
           </div>
         </div>
         <Button onClick={this.handleSubmitLetter} className='ui button'>Submit Letter</Button>
