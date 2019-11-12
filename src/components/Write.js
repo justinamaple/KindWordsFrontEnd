@@ -80,7 +80,7 @@ class Write extends Component {
                     : 'Write your letter here! ✎'
                 }
                 value={this.state.content}
-              ></textarea>
+              />
             </div>
           </div>
           <span className='right floated icon'>
