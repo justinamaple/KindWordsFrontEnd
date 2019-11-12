@@ -90,18 +90,21 @@ class Write extends Component {
               </span>
             </div>
           </div>
-          <div class='ui right aligned one column grid'>
+          <div class='one column row'>
             <div className='column'>
-              <Button onClick={handleCloseClick} className='ui button'>
-                Close
-              </Button>
               <Button
                 onClick={
                   isRead ? this.handleSubmitResponse : this.handleSubmitLetter
                 }
-                className='ui button'
+                className='ui right floated button'
               >
                 Send
+              </Button>
+              <Button
+                onClick={handleCloseClick}
+                className='ui right floated button'
+              >
+                Close
               </Button>
             </div>
           </div>
