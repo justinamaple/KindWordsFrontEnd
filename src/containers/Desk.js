@@ -185,11 +185,13 @@ class Desk extends Component {
           handleWriteClick={this.handleWriteClick}
           handleJournalClick={this.handleJournalClick}
         />
-        {isWrite && !isRead ? this.renderWrite() : null}
-        {isRead && !isWrite ? this.renderRead(plane) : null}
-        {isWrite && isRead ? this.renderCreateResponse(plane) : null}
-        {isJournal ? this.renderJournal() : null}
-        {plane && this.isEmptyDesk() ? this.renderPlane() : null}
+        <div className='ui two column centered grid'>
+          {isWrite && !isRead ? this.renderWrite() : null}
+          {isRead && !isWrite ? this.renderRead(plane) : null}
+          {isWrite && isRead ? this.renderCreateResponse(plane) : null}
+          {isJournal ? this.renderJournal() : null}
+          {plane && this.isEmptyDesk() ? this.renderPlane() : null}
+        </div>
       </>
     )
   }

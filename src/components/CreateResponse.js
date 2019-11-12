@@ -10,7 +10,7 @@ const CreateResponse = ({
   incrementResponses
 }) => {
   return (
-    <div className='ui two cards'>
+    <div className='two column row'>
       <Read letter={letter} isWrite={true} icon={icon} />
       <Write
         accountId={accountId}
