@@ -4,21 +4,28 @@ import Desk from './containers/Desk'
 import LoginScreen from './containers/LoginScreen'
 import './App.css'
 
- class App extends Component {
-
+class App extends Component {
   state = {
-    accountId: 2
+    accountId: 2,
+    icon: '-T' //test
   }
 
   render() {
+    const { accountId, icon } = this.state
+
     return (
       <Router>
-        <Route exact path='/' render={(props) => <Desk {...props} accountId={this.state.accountId} />} />
+        <Route
+          exact
+          path='/'
+          render={props => (
+            <Desk {...props} accountId={accountId} icon={icon} />
+          )}
+        />
         <Route exact path='/login' component={LoginScreen} />
       </Router>
     )
   }
-
 }
 
 export default App

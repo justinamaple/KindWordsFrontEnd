@@ -16,7 +16,7 @@ class Write extends Component {
   }
 
   handleSubmitLetter = () => {
-    const { handleCloseClick, accountId } = this.props
+    const { handleCloseClick, accountId, icon } = this.props
     fetch(LETTERS_URL, {
       method: 'POST',
       headers: {
@@ -25,17 +25,23 @@ class Write extends Component {
       },
       body: JSON.stringify({
         content: this.state.content,
-        account_id: accountId
+        account_id: accountId,
+        icon: icon
       })
     })
-      .then(res => res.json())
-      .then(console.log)
 
     handleCloseClick()
   }
 
   handleSubmitResponse = () => {
-    const { letterId, handleCloseClick, accountId } = this.props
+    const {
+      letter,
+      handleCloseClick,
+      accountId,
+      icon,
+      incrementResponses
+    } = this.props
+    const letterId = letter.id
 
     fetch(LETTERS_URL + `/${letterId}/responses`, {
       method: 'POST',
@@ -46,17 +52,18 @@ class Write extends Component {
       body: JSON.stringify({
         content: this.state.content,
         letter_id: letterId,
-        account_id: accountId
+        account_id: accountId,
+        icon: icon
       })
     })
       .then(res => res.json())
-      .then(console.log)
+      .then(incrementResponses(letter))
 
     handleCloseClick()
   }
 
   render() {
-    const { isRead } = this.props
+    const { isRead, icon, handleCloseClick } = this.props
 
     return (
       <div className='ui centered card'>
@@ -64,27 +71,39 @@ class Write extends Component {
           <div className='ui form'>
             <div className='field'>
               <textarea
-                rows='20'
+                rows='10'
+                maxLength='200'
                 onChange={this.handleTextChange}
                 placeholder={
                   isRead
-                    ? 'Write your response here!'
-                    : 'Write your letter here!'
+                    ? 'Write your response here! ✎'
+                    : 'Write your letter here! ✎'
                 }
                 value={this.state.content}
               ></textarea>
             </div>
           </div>
           <span className='right floated icon'>
-            <Icon />
+            <Icon icon={icon} />
           </span>
         </div>
-        <Button
-          onClick={isRead ? this.handleSubmitResponse : this.handleSubmitLetter}
-          className='ui centered button'
-        >
-          Send
-        </Button>
+        <div className='ui two item menu'>
+          <div className='item'>
+            <Button
+              onClick={
+                isRead ? this.handleSubmitResponse : this.handleSubmitLetter
+              }
+              className='ui button'
+            >
+              Send
+            </Button>
+          </div>
+          <div className='item'>
+            <Button onClick={handleCloseClick} className='ui button'>
+              Close
+            </Button>
+          </div>
+        </div>
       </div>
     )
   }
