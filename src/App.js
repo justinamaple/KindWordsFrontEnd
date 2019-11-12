@@ -10,26 +10,38 @@ class App extends Component {
     icon: ''
   }
 
-  setAccountId = accountId => {
-    this.setState({ accountId })
+  setAccountInfo = state => {
+    this.setState(state)
   }
 
-  signOut = () => {
+  handleSignOut = () => {
     this.setState({ accountId: '' })
+    window.history.back()
   }
 
   render() {
+    const { accountId, icon } = this.state
+    const { setAccountInfo, handleSignOut } = this
     return (
       <Router>
         <Route
           exact
           path='/'
-          render={props => <Desk {...props} accountId={this.state.accountId} />}
+          render={props => (
+            <Desk
+              {...props}
+              accountId={accountId}
+              icon={icon}
+              handleSignOut={handleSignOut}
+            />
+          )}
         />
         <Route
           exact
           path='/login'
-          render={() => <LoginScreen setAccountId={this.setAccountId} />}
+          render={props => (
+            <LoginScreen {...props} setAccountInfo={setAccountInfo} />
+          )}
         />
       </Router>
     )

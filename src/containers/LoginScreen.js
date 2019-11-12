@@ -15,15 +15,19 @@ class LoginScreen extends Component {
   }
 
   createAccount = e => {
-    console.log(this.state)
+    this.fetchAccount('signup')
   }
 
   loginAccount = e => {
-    const { email, password } = this.state
-    const baseUrl = 'http://localhost:3000'
-    const signinUrl = baseUrl + '/signin'
+    this.fetchAccount('login')
+  }
 
-    fetch(signinUrl, {
+  fetchAccount = url => {
+    const { email, password } = this.state
+    const fetchUrl = 'http://localhost:3000/' + url
+    const { setAccountInfo } = this.props
+    console.log('here')
+    fetch(fetchUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +39,10 @@ class LoginScreen extends Component {
       })
     })
       .then(resp => resp.json())
-      .then(json => console.log(json))
+      .then(accountInfo => {
+        setAccountInfo(accountInfo)
+        this.props.history.push('/')
+      })
   }
 
   renderLoginForm = () => {

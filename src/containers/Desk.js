@@ -40,7 +40,10 @@ class Desk extends Component {
   }
 
   componentDidMount() {
-    this.fetchLetters()
+    if (!this.props.accountId) {
+      this.props.history.push('/login')
+    }
+    // this.fetchLetters()
   }
 
   componentWillUnmount() {
@@ -148,6 +151,7 @@ class Desk extends Component {
 
   render() {
     const { plane, isWrite, isRead, isJournal } = this.state
+    const { handleSignOut } = this.props
 
     return (
       <>
@@ -158,6 +162,7 @@ class Desk extends Component {
           handleWriteClick={this.handleWriteClick}
           handleJournalClick={this.handleJournalClick}
           handleCloseClick={this.handleCloseClick}
+          handleSignOut={handleSignOut}
         />
         {isWrite && !isRead ? this.renderWrite() : null}
         {isRead && !isWrite ? this.renderRead(plane) : null}

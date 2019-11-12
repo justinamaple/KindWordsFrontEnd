@@ -9,7 +9,8 @@ class NavBar extends Component {
       isJournal,
       handleWriteClick,
       handleJournalClick,
-      handleCloseClick
+      handleCloseClick,
+      handleSignOut
     } = this.props
 
     return isWrite || isRead || isJournal ? (
@@ -25,6 +26,9 @@ class NavBar extends Component {
         </Button>
         <Button onClick={handleJournalClick} className='ui button'>
           Read Journal
+        </Button>
+        <Button onClick={handleSignOut} className='ui button'>
+          Sign Out
         </Button>
       </nav>
     )
