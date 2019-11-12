@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Button from '../components/Button'
 
 class LoginScreen extends Component {
   // Make sure this state matches the form we want
@@ -25,6 +26,7 @@ class LoginScreen extends Component {
   fetchAccount = url => {
     const { email, password } = this.state
     const { setAccountInfo } = this.props
+
     fetch(url, {
       method: 'POST',
       headers: {
@@ -38,12 +40,13 @@ class LoginScreen extends Component {
     })
       .then(resp => resp.json())
       .then(accountInfo => {
+        // Need to add error handling if create/login fails
         setAccountInfo(accountInfo)
         this.props.history.push('/')
       })
   }
 
-  renderLoginForm = () => {
+  render() {
     return (
       <>
         <label>Email: </label>
@@ -51,19 +54,15 @@ class LoginScreen extends Component {
 
         <label>Password: </label>
         <input type='password' name='password' onChange={this.handleChange} />
-
-        <button id='create' onClick={this.createAccount}>
+        <br />
+        <Button id='create' onClick={this.createAccount} className='ui button'>
           Create Account
-        </button>
-        <button id='login' onClick={this.loginAccount}>
+        </Button>
+        <Button id='login' onClick={this.loginAccount} className='ui button'>
           Login
-        </button>
+        </Button>
       </>
     )
-  }
-
-  render() {
-    return <>{this.renderLoginForm()}</>
   }
 }
 

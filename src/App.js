@@ -15,8 +15,13 @@ class App extends Component {
   }
 
   handleSignOut = () => {
-    this.setState({ accountId: '' })
-    window.history.pushState('/login')
+    let state = {
+      accountId: '',
+      icon: ''
+    }
+    this.setState(state)
+    // TODO: This is not working correctly
+    window.history.pushState({}, '', 'http://localhost:3001/login')
   }
 
   render() {
