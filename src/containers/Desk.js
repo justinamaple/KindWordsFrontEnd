@@ -20,6 +20,33 @@ class Desk extends Component {
     plane: null
   }
 
+  componentDidMount() {
+    if (!this.props.accountId) {
+      this.props.history.push('/login')
+    }
+    this.fetchLetters()
+    this.fetchSeen()
+  }
+
+  fetchLetters = () => {
+    fetch(LETTERS_URL)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ letterStack: json })
+        this.startPlanes()
+      })
+  }
+
+  fetchSeen = () => {
+    const { accountId } = this.props
+
+    fetch(`${SEENS_URL}?account_id=${accountId}`)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ lettersSeen: json })
+      })
+  }
+
   startPlanes = () => {
     const planeInterval = setInterval(this.throwPlane, 5000)
     this.setState({ intervalId: planeInterval })
@@ -45,35 +72,27 @@ class Desk extends Component {
     this.setState({ letterStack: stack, plane: plane })
   }
 
-  componentDidMount() {
-    if (!this.props.accountId) {
-      this.props.history.push('/login')
+  renderPlane = () => {
+    return (
+      <Plane
+        key={this.state.plane.id}
+        plane={this.state.plane}
+        handleClick={this.handlePlaneClick}
+      />
+    )
+  }
+
+  handlePlaneClick = (_e, letter) => {
+    let lettersSeen = {
+      ...this.state.lettersSeen,
+      [letter.id]: true
     }
-    this.fetchLetters()
-    this.fetchSeen()
-  }
-
-  componentWillUnmount() {
-    this.stopPlanes()
-  }
-
-  fetchLetters = () => {
-    fetch(LETTERS_URL)
-      .then(resp => resp.json())
-      .then(json => {
-        this.setState({ letterStack: json })
-        this.startPlanes()
-      })
-  }
-
-  fetchSeen = () => {
-    const { accountId } = this.props
-
-    fetch(`${SEENS_URL}?account_id=${accountId}`)
-      .then(resp => resp.json())
-      .then(json => {
-        this.setState({ lettersSeen: json })
-      })
+    this.setState({
+      isRead: true,
+      lettersSeen: lettersSeen
+    })
+    this.postSeen(letter.id)
+    this.incrementViews(letter)
   }
 
   postSeen = letterId => {
@@ -92,39 +111,6 @@ class Desk extends Component {
     })
   }
 
-  handleWriteClick = () => {
-    this.setState({
-      isWrite: true,
-      isRead: false,
-      isJournal: false
-    })
-  }
-
-  renderWrite = () => {
-    this.stopPlanes()
-    return (
-      <Write
-        accountId={this.props.accountId}
-        icon={this.props.icon}
-        handleCloseClick={this.clearDesk}
-      />
-    )
-  }
-
-  handlePlaneClick = (_e, letter) => {
-    let lettersSeen = {
-      ...this.state.lettersSeen,
-      [letter.id]: true
-    }
-    // Optimistically add letter to lettersSeen in state
-    this.setState({
-      isRead: true,
-      lettersSeen: lettersSeen
-    })
-    this.postSeen(letter.id)
-    this.incrementViews(letter)
-  }
-
   incrementViews = letter => {
     fetch(LETTERS_URL + `/${letter.id}`, {
       method: 'PATCH',
@@ -136,8 +122,33 @@ class Desk extends Component {
         num_views: letter.num_views + 1
       })
     })
-      .then(res => res.json())
-      .then(console.log)
+  }
+
+  renderWrite = () => {
+    const { accountId, icon } = this.props
+    this.stopPlanes()
+    return <Write accountId={accountId} icon={icon} setDesk={this.setDesk} />
+  }
+
+  renderRead = letter => {
+    this.stopPlanes()
+    return <Read letter={letter} setDesk={this.setDesk} />
+  }
+
+  renderCreateResponse = letter => {
+    const { accountId, icon } = this.props
+
+    return (
+      <CreateResponse
+        accountId={accountId}
+        icon={icon}
+        letter={letter}
+        isRead={true}
+        isWrite={true}
+        setDesk={this.setDesk}
+        incrementResponses={this.incrementResponses}
+      />
+    )
   }
 
   incrementResponses = letter => {
@@ -151,74 +162,32 @@ class Desk extends Component {
         num_responses: letter.num_responses + 1
       })
     })
-      .then(res => res.json())
-      .then(console.log)
-  }
-
-  renderRead = letter => {
-    this.stopPlanes()
-    return <Read letter={letter} handleClick={this.handleRespondClick} />
-  }
-
-  handleRespondClick = () => {
-    this.setState({
-      isJournal: false,
-      isRead: true,
-      isWrite: true
-    })
-  }
-
-  renderCreateResponse = letter => {
-    return (
-      <CreateResponse
-        accountId={this.props.accountId}
-        icon={this.props.icon}
-        letter={letter}
-        isRead={true}
-        isWrite={true}
-        handleCloseClick={this.clearDesk}
-        incrementResponses={this.incrementResponses}
-      />
-    )
-  }
-
-  handleJournalClick = () => {
-    this.setState({
-      isJournal: true,
-      isRead: false,
-      isWrite: false
-    })
-  }
-
-  renderPlane = () => {
-    return (
-      <Plane
-        key={this.state.plane.id}
-        plane={this.state.plane}
-        handleClick={this.handlePlaneClick}
-      />
-    )
   }
 
   renderJournal = () => {
     const { accountId } = this.props
 
     this.stopPlanes()
-    return <Journal accountId={accountId} handleCloseClick={this.clearDesk} />
+    return <Journal accountId={accountId} setDesk={this.setDesk} />
   }
 
-  clearDesk = () => {
+  setDesk = (write = false, read = false, journal = false) => {
     this.setState({
-      isWrite: false,
-      isRead: false,
-      isJournal: false
+      isWrite: write,
+      isRead: read,
+      isJournal: journal
     })
-    this.startPlanes()
+
+    if (this.isEmptyDesk) this.startPlanes()
   }
 
   isEmptyDesk = () => {
     const { isWrite, isRead, isJournal } = this.state
     return !isWrite && !isRead && !isJournal
+  }
+
+  componentWillUnmount() {
+    this.stopPlanes()
   }
 
   render() {
@@ -227,12 +196,7 @@ class Desk extends Component {
 
     return (
       <>
-        <NavBar
-          handleWriteClick={this.handleWriteClick}
-          handleJournalClick={this.handleJournalClick}
-          handleCloseClick={this.handleCloseClick}
-          handleSignOut={handleSignOut}
-        />
+        <NavBar setDesk={this.setDesk} handleSignOut={handleSignOut} />
         <div className='ui two column centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}
           {isRead && !isWrite ? this.renderRead(plane) : null}

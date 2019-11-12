@@ -16,7 +16,7 @@ class Write extends Component {
   }
 
   handleSubmitLetter = () => {
-    const { handleCloseClick, accountId, icon } = this.props
+    const { setDesk, accountId, icon } = this.props
     fetch(LETTERS_URL, {
       method: 'POST',
       headers: {
@@ -30,17 +30,11 @@ class Write extends Component {
       })
     })
 
-    handleCloseClick()
+    setDesk()
   }
 
   handleSubmitResponse = () => {
-    const {
-      letter,
-      handleCloseClick,
-      accountId,
-      icon,
-      incrementResponses
-    } = this.props
+    const { letter, setDesk, accountId, icon, incrementResponses } = this.props
     const letterId = letter.id
 
     fetch(LETTERS_URL + `/${letterId}/responses`, {
@@ -59,11 +53,11 @@ class Write extends Component {
       .then(res => res.json())
       .then(incrementResponses(letter))
 
-    handleCloseClick()
+    setDesk()
   }
 
   render() {
-    const { isRead, icon, handleCloseClick } = this.props
+    const { isRead, icon, setDesk } = this.props
 
     return (
       <>
@@ -90,21 +84,22 @@ class Write extends Component {
               </span>
             </div>
           </div>
-          <div class='ui right aligned one column grid'>
-            <div className='column'>
-              <Button onClick={handleCloseClick} className='ui button'>
-                Close
-              </Button>
-              <Button
-                onClick={
-                  isRead ? this.handleSubmitResponse : this.handleSubmitLetter
-                }
-                className='ui button'
-              >
-                Send
-              </Button>
-            </div>
-          </div>
+          <>
+            <Button
+              onClick={
+                isRead ? this.handleSubmitResponse : this.handleSubmitLetter
+              }
+              className='ui right floated button'
+            >
+              Send
+            </Button>
+            <Button
+              onClick={() => setDesk()}
+              className='ui right floated button'
+            >
+              Close
+            </Button>
+          </>
         </div>
       </>
     )
