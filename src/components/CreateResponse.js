@@ -4,7 +4,7 @@ import Write from './Write'
 
 const CreateResponse = ({
   letter,
-  close,
+  setDesk,
   accountId,
   icon,
   incrementResponses
@@ -17,7 +17,7 @@ const CreateResponse = ({
         icon={icon}
         letter={letter}
         isRead={true}
-        close={close}
+        setDesk={setDesk}
         incrementResponses={incrementResponses}
       />
     </div>

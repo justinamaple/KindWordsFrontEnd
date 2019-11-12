@@ -63,7 +63,7 @@ class Write extends Component {
   }
 
   render() {
-    const { isRead, icon, clearDesk } = this.props
+    const { isRead, icon, setDesk } = this.props
 
     return (
       <>
@@ -99,7 +99,10 @@ class Write extends Component {
             >
               Send
             </Button>
-            <Button onClick={clearDesk} className='ui right floated button'>
+            <Button
+              onClick={() => setDesk()}
+              className='ui right floated button'
+            >
               Close
             </Button>
           </>
