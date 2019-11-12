@@ -7,6 +7,7 @@ class LoginScreen extends Component {
     email: '',
     password: ''
   }
+
   handleChange = e => {
     let change = {}
     change[e.target.name] = e.target.value
@@ -14,14 +15,36 @@ class LoginScreen extends Component {
   }
 
   createAccount = e => {
-    console.log(this.state)
+    this.fetchAccount('signup')
   }
 
   loginAccount = e => {
-    console.log(this.state)
+    this.fetchAccount('login')
   }
 
-  // Refactor into
+  fetchAccount = url => {
+    const { email, password } = this.state
+    const fetchUrl = 'http://localhost:3000/' + url
+    const { setAccountInfo } = this.props
+    console.log('here')
+    fetch(fetchUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+      .then(resp => resp.json())
+      .then(accountInfo => {
+        setAccountInfo(accountInfo)
+        this.props.history.push('/')
+      })
+  }
+
   renderLoginForm = () => {
     return (
       <>
