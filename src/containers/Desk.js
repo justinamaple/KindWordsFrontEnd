@@ -12,7 +12,7 @@ const SEEN_URL = 'http://localhost:3000/seen'
 class Desk extends Component {
   state = {
     letterStack: [],
-    lettersSeen: [],
+    lettersSeen: {},
     isWrite: false,
     isRead: false,
     isJournal: false,
@@ -30,19 +30,18 @@ class Desk extends Component {
   }
 
   throwPlane = () => {
-    if (this.state.letterStack.length === 0) {
+    const stack = [...this.state.letterStack]
+    let plane = stack.pop()
+    while (plane && this.state.lettersSeen[plane.id.toString()]) {
+      plane = stack.pop()
+    }
+
+    if (stack.length === 0) {
       this.stopPlanes()
       this.fetchLetters()
       return
     }
 
-    const stack = [...this.state.letterStack]
-    let plane = stack.pop()
-
-    // Refactor to a hash for instant lookup
-    while (this.state.lettersSeen.includes(plane.id)) {
-      plane = stack.pop()
-    }
     this.setState({ letterStack: stack, plane: plane })
   }
 
@@ -109,7 +108,10 @@ class Desk extends Component {
   }
 
   handlePlaneClick = (_e, letter) => {
-    let lettersSeen = [...this.state.lettersSeen, letter.id]
+    let lettersSeen = {
+      ...this.state.lettersSeen,
+      [letter.id]: true
+    }
     // Optimistically add letter to lettersSeen in state
     this.setState({
       isRead: true,
