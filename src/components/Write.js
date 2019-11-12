@@ -90,7 +90,7 @@ class Write extends Component {
               </span>
             </div>
           </div>
-          <div class='ui right aligned one column grid'>
+          <div className='ui right aligned one column grid'>
             <div className='column'>
               <Button onClick={handleCloseClick} className='ui button'>
                 Close
