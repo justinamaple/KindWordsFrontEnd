@@ -7,10 +7,12 @@ import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
+const SEEN_URL = 'http://localhost:3000/seen'
 
 class Desk extends Component {
   state = {
     letterStack: [],
+    lettersSeen: [],
     isWrite: false,
     isRead: false,
     isJournal: false,
@@ -35,12 +37,18 @@ class Desk extends Component {
     }
 
     const stack = [...this.state.letterStack]
-    const plane = stack.pop()
+    let plane = stack.pop()
+
+    // Refactor to a hash for instant lookup
+    while (this.state.lettersSeen.includes(plane.id)) {
+      plane = stack.pop()
+    }
     this.setState({ letterStack: stack, plane: plane })
   }
 
   componentDidMount() {
     this.fetchLetters()
+    this.fetchSeen()
   }
 
   componentWillUnmount() {
@@ -54,6 +62,31 @@ class Desk extends Component {
         this.setState({ letterStack: json })
         this.startPlanes()
       })
+  }
+
+  fetchSeen = () => {
+    const { accountId } = this.props
+    fetch(SEEN_URL + `?account_id=${accountId}`)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ lettersSeen: json })
+      })
+  }
+
+  postSeen = letterId => {
+    const { accountId } = this.props
+
+    fetch(SEEN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        account_id: accountId,
+        letter_id: letterId
+      })
+    })
   }
 
   handleWriteClick = () => {
@@ -73,9 +106,13 @@ class Desk extends Component {
   }
 
   handlePlaneClick = (_e, letter) => {
+    let lettersSeen = [...this.state.lettersSeen, letter.id]
+    // Optimistically add letter to lettersSeen in state
     this.setState({
-      isRead: true
+      isRead: true,
+      lettersSeen: lettersSeen
     })
+    this.postSeen(letter.id)
     this.incrementLetterViews(letter)
   }
 
