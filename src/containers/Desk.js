@@ -7,7 +7,7 @@ import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
-const SEEN_URL = 'http://localhost:3000/seen'
+const SEENS_URL = 'http://localhost:3000/seens'
 
 class Desk extends Component {
   state = {
@@ -65,7 +65,8 @@ class Desk extends Component {
 
   fetchSeen = () => {
     const { accountId } = this.props
-    fetch(SEEN_URL + `?account_id=${accountId}`)
+
+    fetch(SEENS_URL + `?account_id=${accountId}`)
       .then(resp => resp.json())
       .then(json => {
         this.setState({ lettersSeen: json })
@@ -75,7 +76,7 @@ class Desk extends Component {
   postSeen = letterId => {
     const { accountId } = this.props
 
-    fetch(SEEN_URL, {
+    fetch(SEENS_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
