@@ -120,14 +120,6 @@ class Desk extends Component {
     })
   }
 
-  // handleWriteClick = () => {
-  //   this.setState({
-  //     isWrite: true,
-  //     isRead: false,
-  //     isJournal: false
-  //   })
-  // }
-
   renderWrite = () => {
     const { accountId, icon } = this.props
     this.stopPlanes()
@@ -138,14 +130,6 @@ class Desk extends Component {
     this.stopPlanes()
     return <Read letter={letter} setDesk={this.setDesk} />
   }
-
-  // handleRespondClick = () => {
-  //   this.setState({
-  //     isJournal: false,
-  //     isRead: true,
-  //     isWrite: true
-  //   })
-  // }
 
   renderCreateResponse = letter => {
     const { accountId, icon } = this.props
@@ -176,27 +160,10 @@ class Desk extends Component {
     })
   }
 
-  // handleJournalClick = () => {
-  //   this.setState({
-  //     isJournal: true,
-  //     isRead: false,
-  //     isWrite: false
-  //   })
-  // }
-
   renderJournal = () => {
     this.stopPlanes()
     return <Journal setDesk={this.setDesk} />
   }
-
-  // clearDesk = () => {
-  //   this.setState({
-  //     isWrite: false,
-  //     isRead: false,
-  //     isJournal: false
-  //   })
-  //   this.startPlanes()
-  // }
 
   setDesk = (write = false, read = false, journal = false) => {
     this.setState({
