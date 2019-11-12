@@ -66,7 +66,7 @@ class Desk extends Component {
   fetchSeen = () => {
     const { accountId } = this.props
 
-    fetch(SEENS_URL + `?account_id=${accountId}`)
+    fetch(`${SEENS_URL}?account_id=${accountId}`)
       .then(resp => resp.json())
       .then(json => {
         this.setState({ lettersSeen: json })
