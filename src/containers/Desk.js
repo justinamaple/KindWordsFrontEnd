@@ -7,7 +7,7 @@ import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
-const SEEN_URL = 'http://localhost:3000/seen'
+const SEENS_URL = 'http://localhost:3000/seens'
 
 class Desk extends Component {
   state = {
@@ -21,6 +21,9 @@ class Desk extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.accountId) {
+      this.props.history.push('/login')
+    }
     this.fetchLetters()
     this.fetchSeen()
   }
@@ -36,7 +39,8 @@ class Desk extends Component {
 
   fetchSeen = () => {
     const { accountId } = this.props
-    fetch(SEEN_URL + `?account_id=${accountId}`)
+
+    fetch(`${SEENS_URL}?account_id=${accountId}`)
       .then(resp => resp.json())
       .then(json => {
         this.setState({ lettersSeen: json })
@@ -95,7 +99,7 @@ class Desk extends Component {
   postSeen = letterId => {
     const { accountId } = this.props
 
-    fetch(SEEN_URL, {
+    fetch(SEENS_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -192,8 +196,10 @@ class Desk extends Component {
   }
 
   renderJournal = () => {
+    const { accountId } = this.props
+
     this.stopPlanes()
-    return <Journal handleCloseClick={this.clearDesk} />
+    return <Journal accountId={accountId} handleCloseClick={this.clearDesk} />
   }
 
   clearDesk = () => {
@@ -216,12 +222,15 @@ class Desk extends Component {
 
   render() {
     const { plane, isWrite, isRead, isJournal } = this.state
+    const { handleSignOut } = this.props
 
     return (
       <>
         <NavBar
           handleWriteClick={this.handleWriteClick}
           handleJournalClick={this.handleJournalClick}
+          handleCloseClick={this.handleCloseClick}
+          handleSignOut={handleSignOut}
         />
         <div className='ui two column centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}
