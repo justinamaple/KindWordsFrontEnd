@@ -66,45 +66,47 @@ class Write extends Component {
     const { isRead, icon, handleCloseClick } = this.props
 
     return (
-      <div className='ui centered card'>
-        <div className='content'>
-          <div className='ui form'>
-            <div className='field'>
-              <textarea
-                rows='10'
-                maxLength='200'
-                onChange={this.handleTextChange}
-                placeholder={
-                  isRead
-                    ? 'Write your response here! ✎'
-                    : 'Write your letter here! ✎'
-                }
-                value={this.state.content}
-              />
+      <>
+        <div className='eight wide centered column'>
+          <div className='ui fluid card'>
+            <div className='content'>
+              <div className='ui form'>
+                <div className='field'>
+                  <textarea
+                    rows='10'
+                    maxLength='200'
+                    onChange={this.handleTextChange}
+                    placeholder={
+                      isRead
+                        ? 'Write your response here! ✎'
+                        : 'Write your letter here! ✎'
+                    }
+                    value={this.state.content}
+                  ></textarea>
+                </div>
+              </div>
+              <span className='right floated icon'>
+                <Icon icon={icon} />
+              </span>
             </div>
           </div>
-          <span className='right floated icon'>
-            <Icon icon={icon} />
-          </span>
-        </div>
-        <div className='ui two item menu'>
-          <div className='item'>
-            <Button
-              onClick={
-                isRead ? this.handleSubmitResponse : this.handleSubmitLetter
-              }
-              className='ui button'
-            >
-              Send
-            </Button>
-          </div>
-          <div className='item'>
-            <Button onClick={handleCloseClick} className='ui button'>
-              Close
-            </Button>
+          <div class='ui right aligned one column grid'>
+            <div className='column'>
+              <Button onClick={handleCloseClick} className='ui button'>
+                Close
+              </Button>
+              <Button
+                onClick={
+                  isRead ? this.handleSubmitResponse : this.handleSubmitLetter
+                }
+                className='ui button'
+              >
+                Send
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     )
   }
 }
