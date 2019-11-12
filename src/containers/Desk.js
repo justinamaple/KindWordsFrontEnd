@@ -87,7 +87,6 @@ class Desk extends Component {
       ...this.state.lettersSeen,
       [letter.id]: true
     }
-    // Optimistically add letter to lettersSeen in state
     this.setState({
       isRead: true,
       lettersSeen: lettersSeen
@@ -125,37 +124,15 @@ class Desk extends Component {
     })
   }
 
-  handleWriteClick = () => {
-    this.setState({
-      isWrite: true,
-      isRead: false,
-      isJournal: false
-    })
-  }
-
   renderWrite = () => {
     const { accountId, icon } = this.props
     this.stopPlanes()
-    return (
-      <Write
-        accountId={accountId}
-        icon={icon}
-        handleCloseClick={this.clearDesk}
-      />
-    )
+    return <Write accountId={accountId} icon={icon} setDesk={this.setDesk} />
   }
 
   renderRead = letter => {
     this.stopPlanes()
-    return <Read letter={letter} handleClick={this.handleRespondClick} />
-  }
-
-  handleRespondClick = () => {
-    this.setState({
-      isJournal: false,
-      isRead: true,
-      isWrite: true
-    })
+    return <Read letter={letter} setDesk={this.setDesk} />
   }
 
   renderCreateResponse = letter => {
@@ -168,7 +145,7 @@ class Desk extends Component {
         letter={letter}
         isRead={true}
         isWrite={true}
-        handleCloseClick={this.clearDesk}
+        setDesk={this.setDesk}
         incrementResponses={this.incrementResponses}
       />
     )
@@ -187,27 +164,23 @@ class Desk extends Component {
     })
   }
 
-  handleJournalClick = () => {
-    this.setState({
-      isJournal: true,
-      isRead: false,
-      isWrite: false
-    })
-  }
-
   renderJournal = () => {
     const { accountId } = this.props
 
     this.stopPlanes()
-    return <Journal accountId={accountId} handleCloseClick={this.clearDesk} />
+    return <Journal accountId={accountId} setDesk={this.setDesk} />
+  }
+
+  setDesk = (write = false, read = false, journal = false) => {
+    this.setState({
+      isWrite: write,
+      isRead: read,
+      isJournal: journal
+    })
   }
 
   clearDesk = () => {
-    this.setState({
-      isWrite: false,
-      isRead: false,
-      isJournal: false
-    })
+    this.setDesk()
     this.startPlanes()
   }
 
@@ -226,12 +199,7 @@ class Desk extends Component {
 
     return (
       <>
-        <NavBar
-          handleWriteClick={this.handleWriteClick}
-          handleJournalClick={this.handleJournalClick}
-          handleCloseClick={this.handleCloseClick}
-          handleSignOut={handleSignOut}
-        />
+        <NavBar setDesk={this.setDesk} handleSignOut={handleSignOut} />
         <div className='ui two column centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}
           {isRead && !isWrite ? this.renderRead(plane) : null}

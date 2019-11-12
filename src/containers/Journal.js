@@ -130,6 +130,7 @@ class Journal extends Component {
 
   render() {
     const { letter, response } = this.state
+    const { setDesk } = this.props
 
     return (
       <div>
@@ -147,7 +148,7 @@ class Journal extends Component {
         />
         <br />
         <div>
-          <Button onClick={this.props.handleCloseClick} className='ui button'>
+          <Button onClick={setDesk} className='ui button'>
             Close
           </Button>
         </div>
