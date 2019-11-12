@@ -20,6 +20,29 @@ class Desk extends Component {
     plane: null
   }
 
+  componentDidMount() {
+    this.fetchLetters()
+    this.fetchSeen()
+  }
+
+  fetchLetters = () => {
+    fetch(LETTERS_URL)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ letterStack: json })
+        this.startPlanes()
+      })
+  }
+
+  fetchSeen = () => {
+    const { accountId } = this.props
+    fetch(SEEN_URL + `?account_id=${accountId}`)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ lettersSeen: json })
+      })
+  }
+
   startPlanes = () => {
     const planeInterval = setInterval(this.throwPlane, 5000)
     this.setState({ intervalId: planeInterval })
@@ -45,64 +68,12 @@ class Desk extends Component {
     this.setState({ letterStack: stack, plane: plane })
   }
 
-  componentDidMount() {
-    this.fetchLetters()
-    this.fetchSeen()
-  }
-
-  componentWillUnmount() {
-    this.stopPlanes()
-  }
-
-  fetchLetters = () => {
-    fetch(LETTERS_URL)
-      .then(resp => resp.json())
-      .then(json => {
-        this.setState({ letterStack: json })
-        this.startPlanes()
-      })
-  }
-
-  fetchSeen = () => {
-    const { accountId } = this.props
-    fetch(SEEN_URL + `?account_id=${accountId}`)
-      .then(resp => resp.json())
-      .then(json => {
-        this.setState({ lettersSeen: json })
-      })
-  }
-
-  postSeen = letterId => {
-    const { accountId } = this.props
-
-    fetch(SEEN_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: JSON.stringify({
-        account_id: accountId,
-        letter_id: letterId
-      })
-    })
-  }
-
-  handleWriteClick = () => {
-    this.setState({
-      isWrite: true,
-      isRead: false,
-      isJournal: false
-    })
-  }
-
-  renderWrite = () => {
-    this.stopPlanes()
+  renderPlane = () => {
     return (
-      <Write
-        accountId={this.props.accountId}
-        icon={this.props.icon}
-        handleCloseClick={this.clearDesk}
+      <Plane
+        key={this.state.plane.id}
+        plane={this.state.plane}
+        handleClick={this.handlePlaneClick}
       />
     )
   }
@@ -121,6 +92,22 @@ class Desk extends Component {
     this.incrementViews(letter)
   }
 
+  postSeen = letterId => {
+    const { accountId } = this.props
+
+    fetch(SEEN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        account_id: accountId,
+        letter_id: letterId
+      })
+    })
+  }
+
   incrementViews = letter => {
     fetch(LETTERS_URL + `/${letter.id}`, {
       method: 'PATCH',
@@ -132,23 +119,26 @@ class Desk extends Component {
         num_views: letter.num_views + 1
       })
     })
-      .then(res => res.json())
-      .then(console.log)
   }
 
-  incrementResponses = letter => {
-    fetch(LETTERS_URL + `/${letter.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: JSON.stringify({
-        num_responses: letter.num_responses + 1
-      })
+  handleWriteClick = () => {
+    this.setState({
+      isWrite: true,
+      isRead: false,
+      isJournal: false
     })
-      .then(res => res.json())
-      .then(console.log)
+  }
+
+  renderWrite = () => {
+    const { accountId, icon } = this.props
+    this.stopPlanes()
+    return (
+      <Write
+        accountId={accountId}
+        icon={icon}
+        handleCloseClick={this.clearDesk}
+      />
+    )
   }
 
   renderRead = letter => {
@@ -165,10 +155,12 @@ class Desk extends Component {
   }
 
   renderCreateResponse = letter => {
+    const { accountId, icon } = this.props
+
     return (
       <CreateResponse
-        accountId={this.props.accountId}
-        icon={this.props.icon}
+        accountId={accountId}
+        icon={icon}
         letter={letter}
         isRead={true}
         isWrite={true}
@@ -178,22 +170,25 @@ class Desk extends Component {
     )
   }
 
+  incrementResponses = letter => {
+    fetch(LETTERS_URL + `/${letter.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        num_responses: letter.num_responses + 1
+      })
+    })
+  }
+
   handleJournalClick = () => {
     this.setState({
       isJournal: true,
       isRead: false,
       isWrite: false
     })
-  }
-
-  renderPlane = () => {
-    return (
-      <Plane
-        key={this.state.plane.id}
-        plane={this.state.plane}
-        handleClick={this.handlePlaneClick}
-      />
-    )
   }
 
   renderJournal = () => {
@@ -213,6 +208,10 @@ class Desk extends Component {
   isEmptyDesk = () => {
     const { isWrite, isRead, isJournal } = this.state
     return !isWrite && !isRead && !isJournal
+  }
+
+  componentWillUnmount() {
+    this.stopPlanes()
   }
 
   render() {
