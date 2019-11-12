@@ -29,14 +29,19 @@ class Write extends Component {
         icon: icon
       })
     })
-      .then(res => res.json())
-      .then(console.log)
 
     handleCloseClick()
   }
 
   handleSubmitResponse = () => {
-    const { letterId, handleCloseClick, accountId, icon } = this.props
+    const {
+      letter,
+      handleCloseClick,
+      accountId,
+      icon,
+      incrementResponses
+    } = this.props
+    const letterId = letter.id
 
     fetch(LETTERS_URL + `/${letterId}/responses`, {
       method: 'POST',
@@ -52,7 +57,7 @@ class Write extends Component {
       })
     })
       .then(res => res.json())
-      .then(console.log)
+      .then(incrementResponses(letter))
 
     handleCloseClick()
   }

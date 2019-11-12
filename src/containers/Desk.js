@@ -79,10 +79,10 @@ class Desk extends Component {
     this.setState({
       isRead: true
     })
-    this.incrementLetterViews(letter)
+    this.incrementViews(letter)
   }
 
-  incrementLetterViews = letter => {
+  incrementViews = letter => {
     fetch(LETTERS_URL + `/${letter.id}`, {
       method: 'PATCH',
       headers: {
@@ -91,6 +91,21 @@ class Desk extends Component {
       },
       body: JSON.stringify({
         num_views: letter.num_views + 1
+      })
+    })
+      .then(res => res.json())
+      .then(console.log)
+  }
+
+  incrementResponses = letter => {
+    fetch(LETTERS_URL + `/${letter.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        num_responses: letter.num_responses + 1
       })
     })
       .then(res => res.json())
@@ -119,6 +134,7 @@ class Desk extends Component {
         isRead={true}
         isWrite={true}
         handleCloseClick={this.clearDesk}
+        incrementResponses={this.incrementResponses}
       />
     )
   }
