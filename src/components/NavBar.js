@@ -1,17 +1,17 @@
 import React from 'react'
 import NavItem from './NavItem'
 
-const NavBar = ({ handleWriteClick, handleJournalClick, handleSignOut }) => {
+const NavBar = ({ setDesk, handleSignOut }) => {
   const navClasses = 'ui button'
   return (
     <div className='ui three item menu'>
       <NavItem
-        onClick={handleWriteClick}
+        onClick={() => setDesk(true)}
         className={navClasses}
         text={'Write'}
       />
       <NavItem
-        onClick={handleJournalClick}
+        onClick={() => setDesk(false, false, true)}
         className={navClasses}
         text={'Journal'}
       />

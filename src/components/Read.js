@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 import Icon from './Icon'
 
-const Read = ({ letter, handleClick, isWrite }) => {
+const Read = ({ letter, setDesk, isWrite }) => {
   if (!letter) {
     letter = {
       content: 'I love you, you got this! <3',
@@ -19,12 +19,20 @@ const Read = ({ letter, handleClick, isWrite }) => {
             <Icon icon={letter.icon} />
           </span>
         </div>
-        {isWrite ? null : (
-          <Button onClick={handleClick} className='ui button'>
+      </div>
+      {isWrite ? null : (
+        <>
+          <Button
+            onClick={() => setDesk(true, true, false)}
+            className='ui right floated button'
+          >
             Respond to Letter
           </Button>
-        )}
-      </div>
+          <Button onClick={() => setDesk()} className='ui right floated button'>
+            Close
+          </Button>
+        </>
+      )}
     </div>
   )
 }
