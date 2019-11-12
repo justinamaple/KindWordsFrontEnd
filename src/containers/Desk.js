@@ -91,7 +91,9 @@ class Desk extends Component {
 
   handleWriteClick = () => {
     this.setState({
-      isWrite: true
+      isWrite: true,
+      isRead: false,
+      isJournal: false
     })
   }
 
@@ -100,7 +102,8 @@ class Desk extends Component {
     return (
       <Write
         accountId={this.props.accountId}
-        handleCloseClick={this.handleCloseClick}
+        icon={this.props.icon}
+        handleCloseClick={this.clearDesk}
       />
     )
   }
@@ -113,10 +116,10 @@ class Desk extends Component {
       lettersSeen: lettersSeen
     })
     this.postSeen(letter.id)
-    this.incrementLetterViews(letter)
+    this.incrementViews(letter)
   }
 
-  incrementLetterViews = letter => {
+  incrementViews = letter => {
     fetch(LETTERS_URL + `/${letter.id}`, {
       method: 'PATCH',
       headers: {
@@ -131,26 +134,53 @@ class Desk extends Component {
       .then(console.log)
   }
 
+  incrementResponses = letter => {
+    fetch(LETTERS_URL + `/${letter.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        num_responses: letter.num_responses + 1
+      })
+    })
+      .then(res => res.json())
+      .then(console.log)
+  }
+
   renderRead = letter => {
     this.stopPlanes()
-    return <Read letter={letter} handleWriteClick={this.handleWriteClick} />
+    return <Read letter={letter} handleClick={this.handleRespondClick} />
+  }
+
+  handleRespondClick = () => {
+    this.setState({
+      isJournal: false,
+      isRead: true,
+      isWrite: true
+    })
   }
 
   renderCreateResponse = letter => {
     return (
       <CreateResponse
         accountId={this.props.accountId}
+        icon={this.props.icon}
         letter={letter}
         isRead={true}
         isWrite={true}
-        handleCloseClick={this.handleCloseClick}
+        handleCloseClick={this.clearDesk}
+        incrementResponses={this.incrementResponses}
       />
     )
   }
 
   handleJournalClick = () => {
     this.setState({
-      isJournal: true
+      isJournal: true,
+      isRead: false,
+      isWrite: false
     })
   }
 
@@ -166,10 +196,10 @@ class Desk extends Component {
 
   renderJournal = () => {
     this.stopPlanes()
-    return <Journal />
+    return <Journal handleCloseClick={this.clearDesk} />
   }
 
-  handleCloseClick = () => {
+  clearDesk = () => {
     this.setState({
       isWrite: false,
       isRead: false,
@@ -189,12 +219,8 @@ class Desk extends Component {
     return (
       <>
         <NavBar
-          isWrite={isWrite}
-          isRead={isRead}
-          isJournal={isJournal}
           handleWriteClick={this.handleWriteClick}
           handleJournalClick={this.handleJournalClick}
-          handleCloseClick={this.handleCloseClick}
         />
         {isWrite && !isRead ? this.renderWrite() : null}
         {isRead && !isWrite ? this.renderRead(plane) : null}

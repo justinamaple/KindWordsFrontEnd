@@ -2,15 +2,23 @@ import React from 'react'
 import Read from './Read'
 import Write from './Write'
 
-const CreateResponse = ({ letter, handleCloseClick, accountId }) => {
+const CreateResponse = ({
+  letter,
+  handleCloseClick,
+  accountId,
+  icon,
+  incrementResponses
+}) => {
   return (
     <div className='ui two cards'>
-      <Read letter={letter} isWrite={true} />
+      <Read letter={letter} isWrite={true} icon={icon} />
       <Write
         accountId={accountId}
-        letterId={letter.id}
+        icon={icon}
+        letter={letter}
         isRead={true}
         handleCloseClick={handleCloseClick}
+        incrementResponses={incrementResponses}
       />
     </div>
   )
