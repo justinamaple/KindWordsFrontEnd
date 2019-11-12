@@ -48,9 +48,10 @@ class Desk extends Component {
   componentDidMount() {
     if (!this.props.accountId) {
       this.props.history.push('/login')
+    } else {
+      this.fetchLetters()
+      this.fetchSeen()
     }
-    this.fetchLetters()
-    this.fetchSeen()
   }
 
   componentWillUnmount() {

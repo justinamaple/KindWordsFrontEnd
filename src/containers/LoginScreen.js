@@ -40,7 +40,7 @@ class LoginScreen extends Component {
     })
       .then(resp => resp.json())
       .then(accountInfo => {
-        console.log(accountInfo)
+        // Need to add error handling if create/login fails
         setAccountInfo(accountInfo)
         this.props.history.push('/')
       })

@@ -8,17 +8,17 @@ const NavBar = ({ handleWriteClick, handleJournalClick, handleSignOut }) => {
       <NavItem
         onClick={handleWriteClick}
         className={navClasses}
-        test={'Write'}
+        text={'Write'}
       />
       <NavItem
         onClick={handleJournalClick}
         className={navClasses}
-        test={'Journal'}
+        text={'Journal'}
       />
       <NavItem
         onClick={handleSignOut}
         className={navClasses}
-        test={'Sign Out'}
+        text={'Sign Out'}
       />
     </div>
   )
