@@ -46,6 +46,9 @@ class Desk extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.accountId) {
+      this.props.history.push('/login')
+    }
     this.fetchLetters()
     this.fetchSeen()
   }
@@ -220,12 +223,15 @@ class Desk extends Component {
 
   render() {
     const { plane, isWrite, isRead, isJournal } = this.state
+    const { handleSignOut } = this.props
 
     return (
       <>
         <NavBar
           handleWriteClick={this.handleWriteClick}
           handleJournalClick={this.handleJournalClick}
+          handleCloseClick={this.handleCloseClick}
+          handleSignOut={handleSignOut}
         />
         <div className='ui two column centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}

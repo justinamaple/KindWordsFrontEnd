@@ -6,23 +6,43 @@ import './App.css'
 
 class App extends Component {
   state = {
-    accountId: 1,
-    icon: '-T' //test
+    accountId: '',
+    icon: ''
+  }
+
+  setAccountInfo = state => {
+    this.setState(state)
+  }
+
+  handleSignOut = () => {
+    this.setState({ accountId: '' })
+    window.history.pushState('/login')
   }
 
   render() {
     const { accountId, icon } = this.state
-
+    const { setAccountInfo, handleSignOut } = this
     return (
       <Router>
         <Route
           exact
           path='/'
           render={props => (
-            <Desk {...props} accountId={accountId} icon={icon} />
+            <Desk
+              {...props}
+              accountId={accountId}
+              icon={icon}
+              handleSignOut={handleSignOut}
+            />
           )}
         />
-        <Route exact path='/login' component={LoginScreen} />
+        <Route
+          exact
+          path='/login'
+          render={props => (
+            <LoginScreen {...props} setAccountInfo={setAccountInfo} />
+          )}
+        />
       </Router>
     )
   }
