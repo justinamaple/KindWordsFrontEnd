@@ -177,11 +177,8 @@ class Desk extends Component {
       isRead: read,
       isJournal: journal
     })
-  }
 
-  clearDesk = () => {
-    this.setDesk()
-    this.startPlanes()
+    if (this.isEmptyDesk) this.startPlanes()
   }
 
   isEmptyDesk = () => {

@@ -16,7 +16,7 @@ class Write extends Component {
   }
 
   handleSubmitLetter = () => {
-    const { clearDesk, accountId, icon } = this.props
+    const { setDesk, accountId, icon } = this.props
     fetch(LETTERS_URL, {
       method: 'POST',
       headers: {
@@ -30,17 +30,11 @@ class Write extends Component {
       })
     })
 
-    clearDesk()
+    setDesk()
   }
 
   handleSubmitResponse = () => {
-    const {
-      letter,
-      clearDesk,
-      accountId,
-      icon,
-      incrementResponses
-    } = this.props
+    const { letter, setDesk, accountId, icon, incrementResponses } = this.props
     const letterId = letter.id
 
     fetch(LETTERS_URL + `/${letterId}/responses`, {
@@ -59,7 +53,7 @@ class Write extends Component {
       .then(res => res.json())
       .then(incrementResponses(letter))
 
-    clearDesk()
+    setDesk()
   }
 
   render() {
