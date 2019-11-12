@@ -197,8 +197,10 @@ class Desk extends Component {
   }
 
   renderJournal = () => {
+    const { accountId } = this.props
+
     this.stopPlanes()
-    return <Journal handleCloseClick={this.clearDesk} />
+    return <Journal accountId={accountId} handleCloseClick={this.clearDesk} />
   }
 
   clearDesk = () => {
