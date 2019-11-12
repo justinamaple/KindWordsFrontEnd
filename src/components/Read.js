@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 import Icon from './Icon'
 
-const Read = ({ letter, handleClick, isWrite }) => {
+const Read = ({ letter, respond, clearDesk, isWrite }) => {
   return (
     <div className='eight wide centered column'>
       <div className='ui fluid card'>
@@ -12,12 +12,17 @@ const Read = ({ letter, handleClick, isWrite }) => {
             <Icon icon={letter.icon} />
           </span>
         </div>
-        {isWrite ? null : (
-          <Button onClick={handleClick} className='ui button'>
+      </div>
+      {isWrite ? null : (
+        <>
+          <Button onClick={respond} className='ui right floated button'>
             Respond to Letter
           </Button>
-        )}
-      </div>
+          <Button onClick={clearDesk} className='ui right floated button'>
+            Close
+          </Button>
+        </>
+      )}
     </div>
   )
 }

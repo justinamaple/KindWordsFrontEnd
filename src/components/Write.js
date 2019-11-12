@@ -16,7 +16,7 @@ class Write extends Component {
   }
 
   handleSubmitLetter = () => {
-    const { handleCloseClick, accountId, icon } = this.props
+    const { clearDesk, accountId, icon } = this.props
     fetch(LETTERS_URL, {
       method: 'POST',
       headers: {
@@ -30,13 +30,13 @@ class Write extends Component {
       })
     })
 
-    handleCloseClick()
+    clearDesk()
   }
 
   handleSubmitResponse = () => {
     const {
       letter,
-      handleCloseClick,
+      clearDesk,
       accountId,
       icon,
       incrementResponses
@@ -59,11 +59,11 @@ class Write extends Component {
       .then(res => res.json())
       .then(incrementResponses(letter))
 
-    handleCloseClick()
+    clearDesk()
   }
 
   render() {
-    const { isRead, icon, handleCloseClick } = this.props
+    const { isRead, icon, clearDesk } = this.props
 
     return (
       <>
@@ -90,24 +90,19 @@ class Write extends Component {
               </span>
             </div>
           </div>
-          <div class='one column row'>
-            <div className='column'>
-              <Button
-                onClick={
-                  isRead ? this.handleSubmitResponse : this.handleSubmitLetter
-                }
-                className='ui right floated button'
-              >
-                Send
-              </Button>
-              <Button
-                onClick={handleCloseClick}
-                className='ui right floated button'
-              >
-                Close
-              </Button>
-            </div>
-          </div>
+          <>
+            <Button
+              onClick={
+                isRead ? this.handleSubmitResponse : this.handleSubmitLetter
+              }
+              className='ui right floated button'
+            >
+              Send
+            </Button>
+            <Button onClick={clearDesk} className='ui right floated button'>
+              Close
+            </Button>
+          </>
         </div>
       </>
     )

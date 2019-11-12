@@ -83,7 +83,6 @@ class Desk extends Component {
       ...this.state.lettersSeen,
       [letter.id]: true
     }
-    // Optimistically add letter to lettersSeen in state
     this.setState({
       isRead: true,
       lettersSeen: lettersSeen
@@ -133,17 +132,19 @@ class Desk extends Component {
     const { accountId, icon } = this.props
     this.stopPlanes()
     return (
-      <Write
-        accountId={accountId}
-        icon={icon}
-        handleCloseClick={this.clearDesk}
-      />
+      <Write accountId={accountId} icon={icon} clearDesk={this.clearDesk} />
     )
   }
 
   renderRead = letter => {
     this.stopPlanes()
-    return <Read letter={letter} handleClick={this.handleRespondClick} />
+    return (
+      <Read
+        letter={letter}
+        respond={this.handleRespondClick}
+        clearDesk={this.clearDesk}
+      />
+    )
   }
 
   handleRespondClick = () => {
@@ -164,7 +165,7 @@ class Desk extends Component {
         letter={letter}
         isRead={true}
         isWrite={true}
-        handleCloseClick={this.clearDesk}
+        clearDesk={this.clearDesk}
         incrementResponses={this.incrementResponses}
       />
     )
@@ -193,7 +194,7 @@ class Desk extends Component {
 
   renderJournal = () => {
     this.stopPlanes()
-    return <Journal handleCloseClick={this.clearDesk} />
+    return <Journal clearDesk={this.clearDesk} />
   }
 
   clearDesk = () => {
