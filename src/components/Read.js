@@ -3,6 +3,13 @@ import Button from './Button'
 import Icon from './Icon'
 
 const Read = ({ letter, handleClick, isWrite }) => {
+  if (!letter) {
+    letter = {
+      content: 'I love you, you got this! <3',
+      icon: 'J'
+    }
+  }
+
   return (
     <div className='eight wide centered column'>
       <div className='ui fluid card'>

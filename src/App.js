@@ -16,7 +16,7 @@ class App extends Component {
 
   handleSignOut = () => {
     this.setState({ accountId: '' })
-    window.history.back()
+    window.history.pushState('/login')
   }
 
   render() {

@@ -14,20 +14,18 @@ class LoginScreen extends Component {
     this.setState(change)
   }
 
-  createAccount = e => {
-    this.fetchAccount('signup')
+  createAccount = () => {
+    this.fetchAccount('http://localhost:3000/create')
   }
 
-  loginAccount = e => {
-    this.fetchAccount('login')
+  loginAccount = () => {
+    this.fetchAccount('http://localhost:3000/login')
   }
 
   fetchAccount = url => {
     const { email, password } = this.state
-    const fetchUrl = 'http://localhost:3000/' + url
     const { setAccountInfo } = this.props
-    console.log('here')
-    fetch(fetchUrl, {
+    fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
