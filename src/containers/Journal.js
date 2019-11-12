@@ -148,7 +148,7 @@ class Journal extends Component {
         />
         <br />
         <div>
-          <Button onClick={setDesk} className='ui button'>
+          <Button onClick={() => setDesk()} className='ui button'>
             Close
           </Button>
         </div>

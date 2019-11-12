@@ -1,25 +1,25 @@
 import React from 'react'
-import Button from './Button'
+import NavItem from './NavItem'
 
 const NavBar = ({ setDesk, handleSignOut }) => {
+  const navClasses = 'ui button'
   return (
-    <div className='ui two item menu'>
-      <div className='item'>
-        <Button onClick={() => setDesk(true)} className='ui button'>
-          Write Letter
-        </Button>
-      </div>
-      <div className='item'>
-        <Button
-          onClick={() => setDesk(false, false, true)}
-          className='ui button'
-        >
-          Read Journal
-        </Button>
-        <Button onClick={handleSignOut} className='ui button'>
-          Sign Out
-        </Button>
-      </div>
+    <div className='ui three item menu'>
+      <NavItem
+        onClick={() => setDesk(true)}
+        className={navClasses}
+        text={'Write'}
+      />
+      <NavItem
+        onClick={() => setDesk(false, false, true)}
+        className={navClasses}
+        text={'Journal'}
+      />
+      <NavItem
+        onClick={handleSignOut}
+        className={navClasses}
+        text={'Sign Out'}
+      />
     </div>
   )
 }
