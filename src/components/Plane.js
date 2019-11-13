@@ -4,16 +4,45 @@ import fairy from '../assets/images/glow.png'
 import anime from 'animejs'
 
 class Plane extends React.Component {
-  componentDidMount() {
-    this.animate()
+  state = {
+    start: ''
   }
 
-  animate = () => {
+  componentDidMount() {
+    this.setUpAnimation()
+  }
+
+  setUpAnimation = () => {
+    const starts = [
+      'bottom',
+      'top'
+      // 'bottom left',
+      // 'top left',
+      // 'bottom right',
+      // 'top right'
+    ]
+
+    let start = starts[Math.floor(Math.random() * starts.length)]
+
+    this.setState({
+      start: start
+    })
+
+    this.animate(start)
+  }
+
+  animate = start => {
     const { throwPlane } = this.props
 
-    const randomNum = () => Math.floor(Math.random() * 50) + 5
+    let randomNum
 
-    const randomMovement = () => {
+    if (start === 'top') {
+      randomNum = () => Math.floor(Math.random() * 100)
+    } else {
+      randomNum = () => Math.floor(Math.random() * -100)
+    }
+
+    let randomMovement = () => {
       return anime.random(-`${randomNum()}`, `${randomNum()}`) + 'rem'
     }
 
@@ -26,9 +55,9 @@ class Plane extends React.Component {
         { value: randomMovement() }
       ],
       translateY: [
-        { value: (randomNum() + 200) * -1 },
-        { value: (randomNum() + 400) * -1 },
-        { value: (randomNum() + 600) * -1 }
+        { value: randomNum() * 4 },
+        { value: randomNum() * 8 },
+        { value: randomNum() * 12 }
       ],
       opacity: [{ value: 0.5 }, { value: 0 }],
       easing: 'linear',
@@ -36,18 +65,17 @@ class Plane extends React.Component {
       complete: throwPlane
     }
 
-    console.log(animeObj)
+    console.log(animeObj, this.state.start)
+
     anime(animeObj)
   }
 
   render() {
     const { handleClick, plane } = this.props
-    const starts = ['bottom', 'left-bottom', 'right-bottom']
-    let randomStart = starts[Math.floor(Math.random() * starts.length)]
-
+    const { start } = this.state
     return (
       <Button
-        className={`star ui button ${randomStart}`}
+        className={`star ui button ${start}`}
         onClick={e => handleClick(e, plane)}
       >
         <img id='glowImg' src={fairy} alt='glowing light' />
