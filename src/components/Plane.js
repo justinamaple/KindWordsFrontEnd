@@ -11,44 +11,45 @@ class Plane extends React.Component {
   animate = () => {
     const { throwPlane } = this.props
 
-    const randNum = () => {
-      let num = Math.floor(Math.random() * 10)
-      if (num % 2 === 0) {
-        return [-1000, 1000]
-      } else {
-        return [1000, -1000]
-      }
+    const randomNum = () => Math.floor(Math.random() * 50) + 5
+
+    const randomMovement = () => {
+      return anime.random(-`${randomNum()}`, `${randomNum()}`) + 'rem'
     }
 
-    const randPos = () => {
-      return Math.floor(Math.random() * 700) + 100
-    }
-
-    let randomMovement = function() {
-      return anime.random(-50, 50) + 'rem'
-    }
-
-    anime({
+    const animeObj = {
       targets: '.star',
       translateX: [
-        { value: randomMovement },
-        { value: randomMovement },
-        { value: randomMovement },
-        { value: randomMovement }
+        { value: randomMovement() },
+        { value: randomMovement() },
+        { value: randomMovement() },
+        { value: randomMovement() }
       ],
-      translateY: [{ value: -200 }, { value: -400 }, { value: -600 }],
+      translateY: [
+        { value: (randomNum() + 200) * -1 },
+        { value: (randomNum() + 400) * -1 },
+        { value: (randomNum() + 600) * -1 }
+      ],
       opacity: [{ value: 0.5 }, { value: 0 }],
       easing: 'linear',
       duration: 10000,
-      complete: () => this.animate()
-    })
+      complete: throwPlane
+    }
+
+    console.log(animeObj)
+    anime(animeObj)
   }
 
   render() {
     const { handleClick, plane } = this.props
+    const starts = ['bottom', 'left-bottom', 'right-bottom']
+    let randomStart = starts[Math.floor(Math.random() * starts.length)]
 
     return (
-      <Button className='star ui button' onClick={e => handleClick(e, plane)}>
+      <Button
+        className={`star ui button ${randomStart}`}
+        onClick={e => handleClick(e, plane)}
+      >
         <img id='glowImg' src={fairy} alt='glowing light' />
       </Button>
     )
