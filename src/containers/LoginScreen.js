@@ -17,7 +17,7 @@ class LoginScreen extends Component {
   }
 
   setErrors = errors => {
-    this.setState({ errors: errors })
+    this.setState({ errors: errors, password: '' })
   }
 
   createAccount = () => {
@@ -97,6 +97,7 @@ class LoginScreen extends Component {
           type='text'
           name='email'
           onChange={this.handleChange}
+          value={this.state.email}
         />
       </div>
     )
@@ -111,6 +112,7 @@ class LoginScreen extends Component {
           type='password'
           name='password'
           onChange={this.handleChange}
+          value={this.state.password}
         />
       </div>
     )

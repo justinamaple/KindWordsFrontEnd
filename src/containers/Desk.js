@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NavBar from '../components/NavBar'
+import NavBar from './NavBar'
 import Plane from '../components/Plane'
 import Read from '../components/Read'
 import Write from '../components/Write'

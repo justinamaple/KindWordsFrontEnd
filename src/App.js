@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import Desk from './containers/Desk'
 import LoginScreen from './containers/LoginScreen'
 import './App.css'
@@ -15,13 +15,13 @@ class App extends Component {
   }
 
   handleSignOut = () => {
-    let state = {
-      accountId: '',
-      icon: ''
+    this.setState({ accountId: '', icon: '' })
+  }
+
+  renderRedirect = () => {
+    if (this.state.accountId === '') {
+      return <Redirect to='/login' />
     }
-    this.setState(state)
-    // TODO: This is not working correctly
-    window.history.pushState({}, '', 'http://localhost:3001/login')
   }
 
   render() {
@@ -29,6 +29,7 @@ class App extends Component {
     const { setAccountInfo, handleSignOut } = this
     return (
       <Router>
+        {this.renderRedirect()}
         <Route
           exact
           path='/'
