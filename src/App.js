@@ -28,11 +28,6 @@ class App extends Component {
   render() {
     const { accountId, icon } = this.state
     const { setAccountInfo, handleSignOut } = this
-    const style = {
-      width: '100%',
-      height: '100%',
-      backgroundImage: `url(${BGImage})`
-    }
 
     return (
       <Router>

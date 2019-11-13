@@ -26,15 +26,15 @@ class Desk extends Component {
     } else {
       this.fetchLetters()
       this.fetchSeen()
+      this.startPlanes()
     }
   }
 
   fetchLetters = () => {
     fetch(LETTERS_URL)
       .then(resp => resp.json())
-      .then(json => {
-        this.setState({ letterStack: json })
-        this.startPlanes()
+      .then(letters => {
+        this.setState({ letterStack: letters })
       })
   }
 
@@ -55,8 +55,6 @@ class Desk extends Component {
 
   stopPlanes = () => {
     clearInterval(this.state.intervalId)
-
-    if (this.state.plane) this.setState({ plane: null })
   }
 
   throwPlane = () => {
@@ -69,10 +67,9 @@ class Desk extends Component {
     if (stack.length === 0) {
       this.stopPlanes()
       this.fetchLetters()
-      return
+    } else {
+      this.setState({ letterStack: stack, plane: plane })
     }
-
-    this.setState({ letterStack: stack, plane: plane })
   }
 
   renderPlane = () => {
@@ -189,7 +186,7 @@ class Desk extends Component {
       isJournal: journal
     })
 
-    if (this.isEmptyDesk()) this.startPlanes()
+    if (!write && !read && !journal) this.startPlanes()
   }
 
   isEmptyDesk = () => {
@@ -213,8 +210,8 @@ class Desk extends Component {
           {isRead && !isWrite ? this.renderRead(plane) : null}
           {isWrite && isRead ? this.renderCreateResponse(plane) : null}
           {isJournal ? this.renderJournal() : null}
+          {plane && this.isEmptyDesk() ? this.renderPlane() : null}
         </div>
-        {plane && this.isEmptyDesk() ? this.renderPlane() : null}
       </>
     )
   }
