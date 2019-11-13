@@ -129,7 +129,14 @@ class Desk extends Component {
   renderWrite = () => {
     const { accountId, icon } = this.props
     this.stopPlanes()
-    return <Write accountId={accountId} icon={icon} setDesk={this.setDesk} />
+    return (
+      <Write
+        accountId={accountId}
+        icon={icon}
+        setDesk={this.setDesk}
+        postSeen={this.postSeen}
+      />
+    )
   }
 
   renderRead = letter => {

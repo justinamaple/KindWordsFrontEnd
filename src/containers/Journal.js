@@ -136,26 +136,28 @@ class Journal extends Component {
     const { setDesk } = this.props
 
     return (
-      <div>
+      <>
         <h2>Journal</h2>
-        <LetterCollection
-          letter={letter}
-          back={this.lettersBack}
-          forward={this.lettersForward}
-        />
-
-        <LetterCollection
-          letter={response}
-          back={this.responsesBack}
-          forward={this.responsesForward}
-        />
-        <br />
-        <div>
-          <Button onClick={() => setDesk()} className='ui button'>
-            Close
-          </Button>
+        <div className='row two wide columns'>
+          <div className='column'>
+            <LetterCollection
+              letter={letter}
+              back={this.lettersBack}
+              forward={this.lettersForward}
+            />
+          </div>
+          <div className='column'>
+            <LetterCollection
+              letter={response}
+              back={this.responsesBack}
+              forward={this.responsesForward}
+            />
+          </div>
         </div>
-      </div>
+        <Button onClick={() => setDesk()} className='ui button'>
+          Close
+        </Button>
+      </>
     )
   }
 }
