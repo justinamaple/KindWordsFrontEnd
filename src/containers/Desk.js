@@ -72,12 +72,16 @@ class Desk extends Component {
   }
 
   renderPlane = () => {
+    const starts = ['bottom', 'top']
+    let start = starts[Math.floor(Math.random() * starts.length)]
+    console.log(start)
     return (
       <Plane
         key={this.state.plane.id}
         plane={this.state.plane}
         handleClick={this.handlePlaneClick}
         throwPlane={this.throwPlane}
+        start={start}
       />
     )
   }
