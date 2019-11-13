@@ -7,7 +7,7 @@ const LetterCollection = ({ letter, forward, back }) => {
     <>
       <div className='ui card'>
         <div className='content'>
-          <Read letter={letter} isWrite={false} />
+          <Read letter={letter} isWrite={true} />
         </div>
       </div>
       <div>

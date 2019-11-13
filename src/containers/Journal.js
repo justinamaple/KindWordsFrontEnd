@@ -6,10 +6,10 @@ import LetterCollection from '../containers/LetterCollection'
 const LETTER_URL = 'http://localhost:3000/letters/'
 class Journal extends Component {
   state = {
-    letter: {},
+    letter: null,
     letters: [],
     lettersHistory: [],
-    response: {},
+    response: null,
     responses: [],
     responseHistory: []
   }
@@ -21,7 +21,8 @@ class Journal extends Component {
       .then(resp => resp.json())
       .then(letters => {
         let letter = letters.pop()
-        fetch(this.fetchLetterResponses(letter.id))
+
+        if (letter) fetch(this.fetchLetterResponses(letter.id))
 
         this.setState({
           letter: letter,
