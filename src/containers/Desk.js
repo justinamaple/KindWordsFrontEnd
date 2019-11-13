@@ -5,6 +5,7 @@ import Read from '../components/Read'
 import Write from '../components/Write'
 import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
+import anime from 'animejs'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
 const SEENS_URL = 'http://localhost:3000/seens'
@@ -16,9 +17,20 @@ class Desk extends Component {
     isWrite: false,
     isRead: false,
     isJournal: false,
-    intervalId: null,
     plane: null
   }
+
+  // randomAnime = () => {
+  //   anime({
+  //     targets: '.star',
+  //     translateX: () => {
+  //       return anime.random(0, 270)
+  //     },
+  //     easing: 'easeInOutQuad',
+  //     duration: 750,
+  //     complete: this.randomAnime
+  //   })
+  // }
 
   componentDidMount() {
     if (!this.props.accountId) {
@@ -26,6 +38,7 @@ class Desk extends Component {
     } else {
       this.fetchLetters()
       this.fetchSeen()
+      // this.randomAnime()
     }
   }
 
@@ -49,12 +62,11 @@ class Desk extends Component {
   }
 
   startPlanes = () => {
-    const planeInterval = setInterval(this.throwPlane, 5000)
-    this.setState({ intervalId: planeInterval })
+    this.throwPlane()
   }
 
   stopPlanes = () => {
-    clearInterval(this.state.intervalId)
+    anime.remove('.star')
   }
 
   throwPlane = () => {
@@ -79,6 +91,7 @@ class Desk extends Component {
         key={this.state.plane.id}
         plane={this.state.plane}
         handleClick={this.handlePlaneClick}
+        throwPlane={this.throwPlane}
       />
     )
   }
