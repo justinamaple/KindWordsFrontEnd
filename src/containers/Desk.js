@@ -5,6 +5,7 @@ import Read from '../components/Read'
 import Write from '../components/Write'
 import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
+import anime from 'animejs'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
 const SEENS_URL = 'http://localhost:3000/seens'

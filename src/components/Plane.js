@@ -21,22 +21,26 @@ class Plane extends React.Component {
     }
 
     const randPos = () => {
-      return Math.floor(Math.random() * 800) + 100
+      return Math.floor(Math.random() * 700) + 100
+    }
+
+    let randomMovement = function() {
+      return anime.random(-50, 50) + 'rem'
     }
 
     anime({
       targets: '.star',
-      translateX: randNum,
-      translateY: [
-        { value: randPos },
-        { value: randPos },
-        { value: randPos },
-        { value: randPos }
+      translateX: [
+        { value: randomMovement },
+        { value: randomMovement },
+        { value: randomMovement },
+        { value: randomMovement }
       ],
+      translateY: [{ value: -200 }, { value: -400 }, { value: -600 }],
       opacity: [{ value: 0.5 }, { value: 0 }],
-      easing: 'easeInOutSine',
-      duration: 15000,
-      complete: throwPlane
+      easing: 'linear',
+      duration: 10000,
+      complete: () => this.animate()
     })
   }
 
@@ -45,7 +49,7 @@ class Plane extends React.Component {
 
     return (
       <Button className='star ui button' onClick={e => handleClick(e, plane)}>
-        <img src={fairy} alt='glowing light' />
+        <img id='glowImg' src={fairy} alt='glowing light' />
       </Button>
     )
   }

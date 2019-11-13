@@ -26,5 +26,12 @@
   border: none;
   padding: 0!important;
   position: absolute;
+  bottom: 0;
+
+}
+
+#glowImg {
+  width: 100px;
+  height: 156px;
 }
 
