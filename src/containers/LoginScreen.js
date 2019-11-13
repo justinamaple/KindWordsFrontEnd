@@ -23,11 +23,11 @@ class LoginScreen extends Component {
   createAccount = () => {
     const { setAccountInfo } = this.props
 
-    this.fetchAccount('http://localhost:3000/create').then(json => {
-      if (json.errors) {
-        this.setErrors(json.errors)
+    this.fetchAccount('http://localhost:3000/create').then(account => {
+      if (account.errors) {
+        this.setErrors(account.errors)
       } else {
-        setAccountInfo(json)
+        setAccountInfo(account)
         this.props.history.push('/')
       }
     })
@@ -36,11 +36,11 @@ class LoginScreen extends Component {
   loginAccount = () => {
     const { setAccountInfo } = this.props
 
-    this.fetchAccount('http://localhost:3000/login').then(json => {
-      if (json.errors) {
-        this.setErrors(json.errors)
+    this.fetchAccount('http://localhost:3000/login').then(account => {
+      if (account.errors) {
+        this.setErrors(account.errors)
       } else {
-        setAccountInfo(json)
+        setAccountInfo(account)
         this.props.history.push('/')
       }
     })

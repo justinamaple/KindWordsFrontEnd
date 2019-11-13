@@ -1,5 +1,6 @@
 import React from 'react'
 import NavItem from '../components/NavItem'
+import { NavLink } from 'react-router-dom'
 import { Menu, Segment } from 'semantic-ui-react'
 
 const NavBar = ({ setDesk, handleSignOut }) => {
@@ -19,11 +20,11 @@ const NavBar = ({ setDesk, handleSignOut }) => {
           text={'Journal'}
         />
         <div className='menu right'>
-          <NavItem
-            onClick={handleSignOut}
-            className={`${navClasses} right`}
-            text={'Sign Out'}
-          />
+          <div className='item'>
+            <NavLink to='/login' onClick={handleSignOut} className={navClasses}>
+              {'Sign Out'}
+            </NavLink>
+          </div>
         </div>
       </Menu>
     </Segment>

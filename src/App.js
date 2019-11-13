@@ -13,16 +13,28 @@ class App extends Component {
 
   setAccountInfo = state => {
     this.setState(state)
+    localStorage.setItem('account', JSON.stringify(state))
+    this.renderRedirect()
   }
 
   handleSignOut = () => {
+    localStorage.clear()
     this.setState({ accountId: '', icon: '' })
+    return <Redirect to='/login' />
   }
 
   renderRedirect = () => {
-    if (this.state.accountId === '') {
+    if (this.state.accountId === '' && localStorage.getItem('account')) {
       return <Redirect to='/login' />
+    } else {
+      return <Redirect to='/' />
     }
+  }
+
+  componentDidMount() {
+    const account = JSON.parse(localStorage.getItem('account'))
+    console.log(account)
+    if (account) this.setState(account)
   }
 
   render() {
