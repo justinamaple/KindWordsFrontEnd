@@ -21,6 +21,11 @@
   color: #09d3ac;
 }
 
+.landpage-image {
+  background-image: url(/assets/images/forest-bg.png);
+  background-size: cover;
+}
+
 .plane {
   background: none!important;
   border: none;

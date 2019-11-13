@@ -29,6 +29,8 @@ class Write extends Component {
         icon: icon
       })
     })
+      .then(res => res.json())
+      .then(letter => this.props.postSeen(letter.id))
 
     setDesk()
   }

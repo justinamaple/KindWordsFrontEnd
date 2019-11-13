@@ -6,7 +6,8 @@ class LoginScreen extends Component {
   // for both CreateAccount and Login
   state = {
     email: '',
-    password: ''
+    password: '',
+    errors: null
   }
 
   handleChange = e => {
@@ -15,19 +16,40 @@ class LoginScreen extends Component {
     this.setState(change)
   }
 
+  setErrors = errors => {
+    this.setState({ errors: errors, password: '' })
+  }
+
   createAccount = () => {
-    this.fetchAccount('http://localhost:3000/create')
+    const { setAccountInfo } = this.props
+
+    this.fetchAccount('http://localhost:3000/create').then(json => {
+      if (json.errors) {
+        this.setErrors(json.errors)
+      } else {
+        setAccountInfo(json)
+        this.props.history.push('/')
+      }
+    })
   }
 
   loginAccount = () => {
-    this.fetchAccount('http://localhost:3000/login')
+    const { setAccountInfo } = this.props
+
+    this.fetchAccount('http://localhost:3000/login').then(json => {
+      if (json.errors) {
+        this.setErrors(json.errors)
+      } else {
+        setAccountInfo(json)
+        this.props.history.push('/')
+      }
+    })
   }
 
   fetchAccount = url => {
     const { email, password } = this.state
-    const { setAccountInfo } = this.props
 
-    fetch(url, {
+    return fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,30 +59,103 @@ class LoginScreen extends Component {
         email: email,
         password: password
       })
-    })
-      .then(resp => resp.json())
-      .then(accountInfo => {
-        // Need to add error handling if create/login fails
-        setAccountInfo(accountInfo)
-        this.props.history.push('/')
-      })
+    }).then(resp => resp.json())
+  }
+
+  closeErrors = () => {
+    this.setState({ errors: null })
+  }
+
+  renderErrors = () => {
+    if (this.state.errors) {
+      return (
+        <div className='ui error message'>
+          <i className='close icon' onClick={this.closeErrors}></i>
+          <div className='header'>
+            There were some errors with your submission
+          </div>
+          <ul className='list'>{this.renderErrorList()}</ul>
+        </div>
+      )
+    }
+  }
+
+  renderErrorList = () => {
+    const { errors } = this.state
+
+    return Object.keys(errors).map((key, index) => (
+      <li key={index}>{`${key} ${errors[key]}`}</li>
+    ))
+  }
+
+  renderEmailInput = () => {
+    return (
+      <div className='row'>
+        <label>Email: </label>
+        <input
+          className='right floated'
+          type='text'
+          name='email'
+          onChange={this.handleChange}
+          value={this.state.email}
+        />
+      </div>
+    )
+  }
+
+  renderPasswordInput = () => {
+    return (
+      <div className='row'>
+        <label>Password: </label>
+        <input
+          className='right floated'
+          type='password'
+          name='password'
+          onChange={this.handleChange}
+          value={this.state.password}
+        />
+      </div>
+    )
+  }
+
+  renderLoginAndCreateButtons = () => {
+    return (
+      <div className='ui two'>
+        <div className='left floated'>
+          <Button
+            id='create'
+            onClick={this.createAccount}
+            className='ui button'
+          >
+            Create
+          </Button>
+        </div>
+        <div className='right floated'>
+          <Button id='login' onClick={this.loginAccount} className='ui button'>
+            Login
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   render() {
     return (
       <>
-        <label>Email: </label>
-        <input type='text' name='email' onChange={this.handleChange} />
-
-        <label>Password: </label>
-        <input type='password' name='password' onChange={this.handleChange} />
-        <br />
-        <Button id='create' onClick={this.createAccount} className='ui button'>
-          Create Account
-        </Button>
-        <Button id='login' onClick={this.loginAccount} className='ui button'>
-          Login
-        </Button>
+        {this.renderErrors()}
+        <div className='ui cards centered'>
+          <div className='card'>
+            <div className='content centered'>
+              <h3 className='centered'> Login </h3>
+              {this.renderEmailInput()}
+              <br />
+              {this.renderPasswordInput()}
+            </div>
+            <div className='extra content'>
+              {this.renderLoginAndCreateButtons()}
+            </div>
+          </div>
+        </div>
       </>
     )
   }
