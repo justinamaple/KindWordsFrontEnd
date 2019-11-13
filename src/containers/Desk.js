@@ -5,7 +5,6 @@ import Read from '../components/Read'
 import Write from '../components/Write'
 import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
-import anime from 'animejs'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
 const SEENS_URL = 'http://localhost:3000/seens'
@@ -20,25 +19,12 @@ class Desk extends Component {
     plane: null
   }
 
-  // randomAnime = () => {
-  //   anime({
-  //     targets: '.star',
-  //     translateX: () => {
-  //       return anime.random(0, 270)
-  //     },
-  //     easing: 'easeInOutQuad',
-  //     duration: 750,
-  //     complete: this.randomAnime
-  //   })
-  // }
-
   componentDidMount() {
     if (!this.props.accountId) {
       this.props.history.push('/login')
     } else {
       this.fetchLetters()
       this.fetchSeen()
-      // this.randomAnime()
     }
   }
 

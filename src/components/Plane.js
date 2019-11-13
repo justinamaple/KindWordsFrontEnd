@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from './Button'
-import star from '../assets/images/star.png'
+import fairy from '../assets/images/glow.png'
 import anime from 'animejs'
 
 class Plane extends React.Component {
@@ -21,18 +21,22 @@ class Plane extends React.Component {
     }
 
     const randPos = () => {
-      return Math.floor(Math.random() * 500) + 100
+      return Math.floor(Math.random() * 800) + 100
     }
 
     anime({
       targets: '.star',
       translateX: randNum,
-      translateY: [{ value: randPos }, { value: randPos }, { value: randPos }],
+      translateY: [
+        { value: randPos },
+        { value: randPos },
+        { value: randPos },
+        { value: randPos }
+      ],
       opacity: [{ value: 0.5 }, { value: 0 }],
       easing: 'easeInOutSine',
       duration: 15000,
-      complete: throwPlane,
-      scale: 2
+      complete: throwPlane
     })
   }
 
@@ -41,7 +45,7 @@ class Plane extends React.Component {
 
     return (
       <Button className='star ui button' onClick={e => handleClick(e, plane)}>
-        <img src={star} alt='star' />
+        <img src={fairy} alt='glowing light' />
       </Button>
     )
   }
