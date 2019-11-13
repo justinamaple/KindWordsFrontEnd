@@ -5,7 +5,6 @@ import Read from '../components/Read'
 import Write from '../components/Write'
 import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
-import backgroundImage from '../assets/images/forest-bg.png'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
 const SEENS_URL = 'http://localhost:3000/seens'
@@ -56,6 +55,8 @@ class Desk extends Component {
 
   stopPlanes = () => {
     clearInterval(this.state.intervalId)
+
+    if (this.state.plane) this.setState({ plane: null })
   }
 
   throwPlane = () => {
@@ -129,6 +130,7 @@ class Desk extends Component {
   renderWrite = () => {
     const { accountId, icon } = this.props
     this.stopPlanes()
+
     return (
       <Write
         accountId={accountId}
@@ -204,16 +206,16 @@ class Desk extends Component {
     const { handleSignOut } = this.props
 
     return (
-      <div className='landpage-image'>
+      <>
         <NavBar setDesk={this.setDesk} handleSignOut={handleSignOut} />
-        <div className='ui two column centered grid'>
+        <div className='ui two column wide centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}
           {isRead && !isWrite ? this.renderRead(plane) : null}
           {isWrite && isRead ? this.renderCreateResponse(plane) : null}
           {isJournal ? this.renderJournal() : null}
-          {plane && this.isEmptyDesk() ? this.renderPlane() : null}
         </div>
-      </div>
+        {plane && this.isEmptyDesk() ? this.renderPlane() : null}
+      </>
     )
   }
 }

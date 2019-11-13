@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import Desk from './containers/Desk'
 import LoginScreen from './containers/LoginScreen'
-import './App.scss'
+import BGImage from './assets/images/forest-bg.png'
+import './styles/App.scss'
 
 class App extends Component {
   state = {
@@ -27,6 +28,12 @@ class App extends Component {
   render() {
     const { accountId, icon } = this.state
     const { setAccountInfo, handleSignOut } = this
+    const style = {
+      width: '100%',
+      height: '100%',
+      backgroundImage: `url(${BGImage})`
+    }
+
     return (
       <Router>
         {this.renderRedirect()}

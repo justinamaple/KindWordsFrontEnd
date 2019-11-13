@@ -91,13 +91,13 @@ class Write extends Component {
               onClick={
                 isRead ? this.handleSubmitResponse : this.handleSubmitLetter
               }
-              className='ui right floated button'
+              className='ui right floated button primary'
             >
               Send
             </Button>
             <Button
               onClick={() => setDesk()}
-              className='ui right floated button'
+              className='ui right floated button secondary'
             >
               Close
             </Button>

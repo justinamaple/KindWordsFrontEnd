@@ -1,3 +1,9 @@
+body {
+  background-image: url('/static/media/forest-bg.102d57b1.png');
+  background-size: cover;
+  font-family: "Roboto";
+}
+
 .App {
   text-align: center;
 }
@@ -21,11 +27,6 @@
   color: #09d3ac;
 }
 
-.landpage-image {
-  background-image: url(/assets/images/forest-bg.png);
-  background-size: cover;
-}
-
 .plane {
   background: none!important;
   border: none;
@@ -36,4 +37,8 @@
   color: #069;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.item {
+  margin: 10px;
 }

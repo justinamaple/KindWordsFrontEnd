@@ -137,16 +137,26 @@ class Journal extends Component {
 
     return (
       <>
-        <h2>Journal</h2>
-        <div className='row two wide columns'>
-          <div className='column'>
+        <div className='row column'>
+          <div className='ui card'>
+            <h2>Journal</h2>
+          </div>
+        </div>
+        <div className='row three cards'>
+          <div className='ui item'>
+            <div className='ui card'>
+              <h3>Entries</h3>
+            </div>
             <LetterCollection
               letter={letter}
               back={this.lettersBack}
               forward={this.lettersForward}
             />
           </div>
-          <div className='column'>
+          <div className='ui item'>
+            <div className='ui card'>
+              <h3>Response(s)</h3>
+            </div>
             <LetterCollection
               letter={response}
               back={this.responsesBack}
@@ -154,7 +164,7 @@ class Journal extends Component {
             />
           </div>
         </div>
-        <Button onClick={() => setDesk()} className='ui button'>
+        <Button onClick={() => setDesk()} className='ui button secondary'>
           Close
         </Button>
       </>
