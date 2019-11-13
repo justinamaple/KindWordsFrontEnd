@@ -1,39 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from './Button'
 import fairy from '../assets/images/glow.png'
 import anime from 'animejs'
 
-class Plane extends React.Component {
-  state = {
-    start: ''
-  }
+const Plane = ({ throwPlane, handleClick, plane }) => {
+  const starts = [
+    'bottom',
+    'top'
+    // 'bottom left',
+    // 'top left',
+    // 'bottom right',
+    // 'top right'
+  ]
 
-  componentDidMount() {
-    this.setUpAnimation()
-  }
+  let start = starts[Math.floor(Math.random() * starts.length)]
 
-  setUpAnimation = () => {
-    const starts = [
-      'bottom',
-      'top'
-      // 'bottom left',
-      // 'top left',
-      // 'bottom right',
-      // 'top right'
-    ]
+  useEffect(() => {
+    animate()
+  }, [])
 
-    let start = starts[Math.floor(Math.random() * starts.length)]
-
-    this.setState({
-      start: start
-    })
-
-    this.animate(start)
-  }
-
-  animate = start => {
-    const { throwPlane } = this.props
-
+  const animate = () => {
     let randomNum
 
     if (start === 'top') {
@@ -65,23 +51,19 @@ class Plane extends React.Component {
       complete: throwPlane
     }
 
-    console.log(animeObj, this.state.start)
+    console.log(animeObj, start)
 
     anime(animeObj)
   }
 
-  render() {
-    const { handleClick, plane } = this.props
-    const { start } = this.state
-    return (
-      <Button
-        className={`star ui button ${start}`}
-        onClick={e => handleClick(e, plane)}
-      >
-        <img id='glowImg' src={fairy} alt='glowing light' />
-      </Button>
-    )
-  }
+  return (
+    <Button
+      className={`star ui button ${start}`}
+      onClick={e => handleClick(e, plane)}
+    >
+      <img id='glowImg' src={fairy} alt='glowing light' />
+    </Button>
+  )
 }
 
 export default Plane
