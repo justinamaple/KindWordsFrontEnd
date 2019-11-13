@@ -24,11 +24,14 @@ const Read = ({ letter, setDesk, isWrite }) => {
         <>
           <Button
             onClick={() => setDesk(true, true, false)}
-            className='ui right floated button'
+            className='ui right floated button primary'
           >
             Respond to Letter
           </Button>
-          <Button onClick={() => setDesk()} className='ui right floated button'>
+          <Button
+            onClick={() => setDesk()}
+            className='ui right floated button secondary'
+          >
             Close
           </Button>
         </>

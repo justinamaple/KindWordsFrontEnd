@@ -125,13 +125,17 @@ class LoginScreen extends Component {
           <Button
             id='create'
             onClick={this.createAccount}
-            className='ui button'
+            className='ui button secondary'
           >
             Create
           </Button>
         </div>
         <div className='right floated'>
-          <Button id='login' onClick={this.loginAccount} className='ui button'>
+          <Button
+            id='login'
+            onClick={this.loginAccount}
+            className='ui button primary'
+          >
             Login
           </Button>
         </div>
@@ -144,7 +148,7 @@ class LoginScreen extends Component {
       <>
         {this.renderErrors()}
         <div className='ui cards centered'>
-          <div className='card'>
+          <div className='card column'>
             <div className='content centered'>
               <h3 className='centered'> Login </h3>
               {this.renderEmailInput()}
