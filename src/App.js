@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import Desk from './containers/Desk'
 import LoginScreen from './containers/LoginScreen'
-import BGImage from './assets/images/forest-bg.png'
 import './styles/App.scss'
 
 class App extends Component {
@@ -33,7 +32,6 @@ class App extends Component {
 
   componentDidMount() {
     const account = JSON.parse(localStorage.getItem('account'))
-    console.log(account)
     if (account) this.setState(account)
   }
 

@@ -5,12 +5,11 @@ import Read from '../components/Read'
 import Write from '../components/Write'
 import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
-import Sound from 'react-sound'
-import SummerMP3 from '../assets/music/Summer-JoeHisaishi(kalimba-cover).mp3'
+import MusicPlayer from '../components/MusicPlayer'
+import BGImage from '../assets/images/forest-bg.png'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
 const SEENS_URL = 'http://localhost:3000/seens'
-const MP3_URL = 'static/media/Summer-JoeHisaishi(kalimba-cover).ed14dea9.mp3'
 
 class Desk extends Component {
   state = {
@@ -24,7 +23,6 @@ class Desk extends Component {
   }
 
   componentDidMount() {
-    console.log(SummerMP3)
     if (!this.props.accountId) {
       this.props.history.push('/login')
     } else {
@@ -183,10 +181,6 @@ class Desk extends Component {
     return <Journal accountId={accountId} setDesk={this.setDesk} />
   }
 
-  renderMusic = () => {
-    return <Sound url={MP3_URL} playStatus={Sound.status.PLAYING} />
-  }
-
   setDesk = (write = false, read = false, journal = false) => {
     this.setState({
       isWrite: write,
@@ -212,7 +206,7 @@ class Desk extends Component {
 
     return (
       <>
-        {this.renderMusic()}
+        <MusicPlayer />
         <NavBar setDesk={this.setDesk} handleSignOut={handleSignOut} />
         <div className='ui two column wide centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}
