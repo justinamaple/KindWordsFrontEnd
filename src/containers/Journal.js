@@ -11,7 +11,7 @@ class Journal extends Component {
     lettersHistory: [],
     response: null,
     responses: [],
-    responseHistory: []
+    responsesHistory: []
   }
 
   fetchAccountsLetters = () => {
@@ -26,7 +26,8 @@ class Journal extends Component {
 
         this.setState({
           letter: letter,
-          letters: letters
+          letters: letters,
+          lettersHistory: []
         })
       })
   }
@@ -39,7 +40,8 @@ class Journal extends Component {
 
         this.setState({
           response: response,
-          responses: responses
+          responses: responses,
+          responsesHistory: []
         })
       })
   }
@@ -116,13 +118,13 @@ class Journal extends Component {
   }
 
   responsesBack = () => {
-    let { response, responses, responseHistory } = this.state
-    this.navigationHandler(response, responses, responseHistory, false, false)
+    let { response, responses, responsesHistory } = this.state
+    this.navigationHandler(response, responses, responsesHistory, false, false)
   }
 
   responsesForward = () => {
-    let { response, responses, responseHistory } = this.state
-    this.navigationHandler(response, responses, responseHistory, false, true)
+    let { response, responses, responsesHistory } = this.state
+    this.navigationHandler(response, responses, responsesHistory, false, true)
   }
 
   componentDidMount() {
