@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Button from './Button'
 import Icon from './Icon'
+import { TextArea } from 'semantic-ui-react'
+import paperBackground from '../assets/images/vintage-paper.jpg'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
 
@@ -59,16 +61,17 @@ class Write extends Component {
   }
 
   render() {
+    console.log(paperBackground)
     const { isRead, icon, setDesk } = this.props
 
     return (
       <>
-        <div className='eight wide centered column'>
+        <div className='six wide centered column'>
           <div className='ui fluid card'>
             <div className='content'>
               <div className='ui form'>
                 <div className='field'>
-                  <textarea
+                  <TextArea
                     id='writetext'
                     rows='10'
                     maxLength='200'
@@ -79,7 +82,7 @@ class Write extends Component {
                         : 'Write your letter here! ✎'
                     }
                     value={this.state.content}
-                  ></textarea>
+                  ></TextArea>
                 </div>
               </div>
               <span className='right floated icon'>

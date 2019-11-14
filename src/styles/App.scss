@@ -5,9 +5,8 @@ body {
   font-family: "Roboto";
 }
 
-#writetext {
-  border: none;
-  resize: none;
+textarea {
+  background: transparent!important;
 }
 
 .App {
@@ -82,3 +81,18 @@ body {
 .item {
   margin: 10px;
 }
+
+div.content {
+  background-image: url('/static/media/vintage-paper.7ecce0ee.jpg')!important;
+  background-size: cover;
+}
+
+#writetext {
+  border: none;
+  resize: none;
+} 
+
+.initial {
+  font-family: 'Shadows Into Light', cursive;
+}
+
