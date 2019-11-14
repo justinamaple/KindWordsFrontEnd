@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from './NavBar'
-import Plane from '../components/Plane'
+import Fairy from '../components/Fairy'
 import Read from '../components/Read'
 import Write from '../components/Write'
 import Journal from '../containers/Journal'
@@ -17,7 +17,7 @@ class Desk extends Component {
     isWrite: false,
     isRead: false,
     isJournal: false,
-    plane: null
+    fairy: null
   }
 
   componentDidMount() {
@@ -26,7 +26,7 @@ class Desk extends Component {
     } else {
       this.fetchLetters()
       this.fetchSeen()
-      this.startPlanes()
+      this.startFairy()
     }
   }
 
@@ -48,45 +48,45 @@ class Desk extends Component {
       })
   }
 
-  startPlanes = () => {
-    this.throwPlane()
+  startFairy = () => {
+    this.throwFairy()
   }
 
-  stopPlanes = () => {
+  stopFairy = () => {
     anime.remove('.star')
   }
 
-  throwPlane = () => {
+  throwFairy = () => {
     const stack = [...this.state.letterStack]
-    let plane = stack.pop()
-    while (plane && this.state.lettersSeen[plane.id.toString()]) {
-      plane = stack.pop()
+    let fairy = stack.pop()
+    while (fairy && this.state.lettersSeen[fairy.id.toString()]) {
+      fairy = stack.pop()
     }
 
     if (stack.length === 0) {
-      this.stopPlanes()
+      this.stopFairy()
       this.fetchLetters()
     } else {
-      this.setState({ letterStack: stack, plane: plane })
+      this.setState({ letterStack: stack, fairy: fairy })
     }
   }
 
-  renderPlane = () => {
+  renderFairy = () => {
     const starts = ['bottom', 'top']
     let start = starts[Math.floor(Math.random() * starts.length)]
     console.log(start)
     return (
-      <Plane
-        key={this.state.plane.id}
-        plane={this.state.plane}
-        handleClick={this.handlePlaneClick}
-        throwPlane={this.throwPlane}
+      <Fairy
+        key={this.state.fairy.id}
+        fairy={this.state.fairy}
+        handleClick={this.handleFairyClick}
+        throwFairy={this.throwFairy}
         start={start}
       />
     )
   }
 
-  handlePlaneClick = (_e, letter) => {
+  handleFairyClick = (_e, letter) => {
     let lettersSeen = {
       ...this.state.lettersSeen,
       [letter.id]: true
@@ -130,7 +130,7 @@ class Desk extends Component {
 
   renderWrite = () => {
     const { accountId, icon } = this.props
-    this.stopPlanes()
+    this.stopFairy()
 
     return (
       <Write
@@ -143,7 +143,7 @@ class Desk extends Component {
   }
 
   renderRead = letter => {
-    this.stopPlanes()
+    this.stopFairy()
     return <Read letter={letter} setDesk={this.setDesk} />
   }
 
@@ -179,7 +179,7 @@ class Desk extends Component {
   renderJournal = () => {
     const { accountId } = this.props
 
-    this.stopPlanes()
+    this.stopFairy()
     return <Journal accountId={accountId} setDesk={this.setDesk} />
   }
 
@@ -190,7 +190,7 @@ class Desk extends Component {
       isJournal: journal
     })
 
-    if (!write && !read && !journal) this.startPlanes()
+    if (!write && !read && !journal) this.startFairy()
   }
 
   isEmptyDesk = () => {
@@ -199,11 +199,11 @@ class Desk extends Component {
   }
 
   componentWillUnmount() {
-    this.stopPlanes()
+    this.stopFairy()
   }
 
   render() {
-    const { plane, isWrite, isRead, isJournal } = this.state
+    const { fairy, isWrite, isRead, isJournal } = this.state
     const { handleSignOut } = this.props
 
     return (
@@ -211,10 +211,10 @@ class Desk extends Component {
         <NavBar setDesk={this.setDesk} handleSignOut={handleSignOut} />
         <div className='ui two column wide centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}
-          {isRead && !isWrite ? this.renderRead(plane) : null}
-          {isWrite && isRead ? this.renderCreateResponse(plane) : null}
+          {isRead && !isWrite ? this.renderRead(fairy) : null}
+          {isWrite && isRead ? this.renderCreateResponse(fairy) : null}
           {isJournal ? this.renderJournal() : null}
-          {plane && this.isEmptyDesk() ? this.renderPlane() : null}
+          {fairy && this.isEmptyDesk() ? this.renderFairy() : null}
         </div>
       </>
     )
