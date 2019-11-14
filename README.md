@@ -79,9 +79,11 @@
 
 ### Built With
 
-* [React]()
-* [Semantic UI]()
-* [Javascript]()
+* [React](https://reactjs.org/)
+* [Create-React-App](https://github.com/facebook/create-react-app)
+* [Semantic UI](https://semantic-ui.com/)
+* [Javascript](https://www.javascript.com/)
+* [NPM](https://www.npmjs.com/)
 
 
 
