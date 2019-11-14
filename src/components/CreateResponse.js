@@ -10,17 +10,29 @@ const CreateResponse = ({
   incrementResponses
 }) => {
   return (
-    <div className='two column row'>
-      <Read letter={letter} isWrite={true} icon={icon} />
-      <Write
-        accountId={accountId}
-        icon={icon}
-        letter={letter}
-        isRead={true}
-        setDesk={setDesk}
-        incrementResponses={incrementResponses}
-      />
-    </div>
+    <>
+      <div className='row three cards'>
+        <div className='ui item'>
+          <div className='ui card'>
+            <h3>Fairy Message</h3>
+          </div>
+          <Read letter={letter} isWrite={true} icon={icon} />
+        </div>
+        <div className='ui item'>
+          <div className='ui card'>
+            <h3>Response</h3>
+          </div>
+          <Write
+            accountId={accountId}
+            icon={icon}
+            letter={letter}
+            isRead={true}
+            setDesk={setDesk}
+            incrementResponses={incrementResponses}
+          />
+        </div>
+      </div>
+    </>
   )
 }
 

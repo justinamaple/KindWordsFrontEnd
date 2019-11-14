@@ -5,6 +5,11 @@ body {
   font-family: "Roboto";
 }
 
+#writetext {
+  border: none;
+  resize: none;
+}
+
 .App {
   text-align: center;
 }
@@ -28,8 +33,18 @@ body {
   color: #09d3ac;
 }
 
+.content {
+  position: relative;
+  min-height: 240px;
+}
 .musicplayer {
   min-width: 120px;
+}
+
+.signature {
+  position: absolute;
+  right:    14px;
+  bottom:   8px;
 }
 
 .star {

@@ -12,7 +12,7 @@ const LetterCollection = ({ letter, forward, back }) => {
       </div>
 
       <div className='card row'>
-        <div className='content'>
+        <div>
           <Button onClick={forward} className='ui button primary right floated'>
             <i className='right arrow icon'></i>
           </Button>
