@@ -11,7 +11,7 @@ const Read = ({ letter, setDesk, isWrite }) => {
   }
 
   return (
-    <div className='eight wide centered column'>
+    <div className='six wide centered column'>
       <div className='ui fluid card'>
         <div className='content'>
           <p>{letter.content}</p>
