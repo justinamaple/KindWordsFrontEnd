@@ -6,8 +6,6 @@ import 'rc-slider/assets/index.css'
 import SummerMP3 from '../assets/music/Summer-JoeHisaishi(kalimba-cover).mp3'
 import Headphones from '../assets/images/headphone-512.png'
 
-const MP3_URL = 'static/media/Summer-JoeHisaishi(kalimba-cover).ed14dea9.mp3'
-const HEADPHONE_URL = '/static/media/headphone-512.37aa3aff.png'
 const START_VOLUME = 50
 
 class MusicPlayer extends Component {
@@ -28,7 +26,7 @@ class MusicPlayer extends Component {
     return (
       <div className='musicplayer'>
         <Sound
-          url={MP3_URL}
+          url={SummerMP3}
           playStatus={this.state.playStatus}
           onLoad={this.playSong}
           volume={this.state.volume}
