@@ -3,11 +3,11 @@ import NavItem from '../components/NavItem'
 import MusicPlayer from '../components/MusicPlayer'
 import { NavLink } from 'react-router-dom'
 import { Menu, Segment } from 'semantic-ui-react'
-import KalimbaIcon from '../assets/images/kalimba-icon.jpeg'
+import KalimbaIcon from '../assets/images/kalimba-icon.png'
 
 const NavBar = ({ setDesk, handleSignOut }) => {
   const navClasses = 'ui button primary'
-  console.log(KalimbaIcon)
+
   return (
     <Menu inverted>
       <div className='item fill'>
