@@ -69,6 +69,7 @@ class Write extends Component {
               <div className='ui form'>
                 <div className='field'>
                   <textarea
+                    id='writetext'
                     rows='10'
                     maxLength='200'
                     onChange={this.handleTextChange}
@@ -86,7 +87,7 @@ class Write extends Component {
               </span>
             </div>
           </div>
-          <>
+          <div>
             <Button
               onClick={
                 isRead ? this.handleSubmitResponse : this.handleSubmitLetter
@@ -101,7 +102,7 @@ class Write extends Component {
             >
               Close
             </Button>
-          </>
+          </div>
         </div>
       </>
     )

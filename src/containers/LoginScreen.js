@@ -149,7 +149,7 @@ class LoginScreen extends Component {
         {this.renderErrors()}
         <div className='ui cards centered'>
           <div className='card column'>
-            <div className='content centered'>
+            <div className='login-content centered'>
               <h3 className='centered'> Login </h3>
               {this.renderEmailInput()}
               <br />

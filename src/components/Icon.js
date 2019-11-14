@@ -3,7 +3,9 @@ import React from 'react'
 const Icon = ({ icon }) => {
   return (
     <div>
-      <span role='img'>- {icon}</span>
+      <span className='signature' role='img'>
+        - {icon}
+      </span>
     </div>
   )
 }
