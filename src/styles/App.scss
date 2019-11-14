@@ -27,16 +27,24 @@ body {
   color: #09d3ac;
 }
 
-.plane {
+.star {
   background: none!important;
   border: none;
   padding: 0!important;
-  /*optional*/
-  font-family: arial, sans-serif;
-  /*input has OS specific font-family*/
-  color: #069;
-  text-decoration: underline;
-  cursor: pointer;
+  position: absolute;
+}
+
+.bottom {
+  bottom: 0;
+}
+
+.top {
+  top: 0;
+}
+
+#glowImg {
+  width: 100px;
+  height: 156px;
 }
 
 .item {
