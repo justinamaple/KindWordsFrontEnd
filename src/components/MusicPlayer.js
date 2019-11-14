@@ -23,11 +23,6 @@ class MusicPlayer extends Component {
   handleVolumeChange = volume => {
     this.setState({ volume: volume })
   }
-  handleSongLoading = () => {}
-
-  handleSongPlaying = () => {}
-
-  handleSongFinishedPlaying = () => {}
 
   render() {
     return (
@@ -35,10 +30,7 @@ class MusicPlayer extends Component {
         <Sound
           url={MP3_URL}
           playStatus={this.state.playStatus}
-          onLoading={this.handleSongLoading}
           onLoad={this.playSong}
-          onPlaying={this.handleSongPlaying}
-          onFinishedPlaying={this.handleSongFinishedPlaying}
           volume={this.state.volume}
           loop={true}
           autoLoad={true}
