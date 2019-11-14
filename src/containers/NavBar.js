@@ -1,5 +1,6 @@
 import React from 'react'
 import NavItem from '../components/NavItem'
+import MusicPlayer from '../components/MusicPlayer'
 import { NavLink } from 'react-router-dom'
 import { Menu, Segment } from 'semantic-ui-react'
 
@@ -19,6 +20,9 @@ const NavBar = ({ setDesk, handleSignOut }) => {
           className={navClasses}
           text={'Journal'}
         />
+        <div className='item'>
+          <MusicPlayer />
+        </div>
         <div className='menu right'>
           <div className='item'>
             <NavLink to='/login' onClick={handleSignOut} className={navClasses}>

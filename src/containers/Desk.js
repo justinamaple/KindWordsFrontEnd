@@ -5,7 +5,6 @@ import Read from '../components/Read'
 import Write from '../components/Write'
 import Journal from '../containers/Journal'
 import CreateResponse from '../components/CreateResponse'
-import MusicPlayer from '../components/MusicPlayer'
 import BGImage from '../assets/images/forest-bg.png'
 
 const LETTERS_URL = 'http://localhost:3000/letters'
@@ -206,7 +205,6 @@ class Desk extends Component {
 
     return (
       <>
-        <MusicPlayer />
         <NavBar setDesk={this.setDesk} handleSignOut={handleSignOut} />
         <div className='ui two column wide centered grid'>
           {isWrite && !isRead ? this.renderWrite() : null}
