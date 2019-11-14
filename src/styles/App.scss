@@ -37,6 +37,18 @@ body {
   position: relative;
   min-height: 240px;
 }
+
+.login-content {
+  flex-grow: 1;
+  border: none;
+  border-top: 1px solid rgba(34, 36, 38, 0.1);
+  background: none;
+  margin: 0em;
+  padding: 1em 1em;
+  box-shadow: none;
+  font-size: 1em;
+  border-radius: 0em;
+}
 .musicplayer {
   min-width: 120px;
 }
