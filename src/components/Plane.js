@@ -10,40 +10,52 @@ class Plane extends Component {
 
   animate = () => {
     const { throwPlane, start } = this.props
-    let randomNum
 
-    if (start === 'top') {
-      randomNum = () => Math.floor(Math.random() * 100)
-    } else {
-      randomNum = () => Math.floor(Math.random() * -100)
+    let randomX = () => Math.floor(Math.random() * 100) + 5
+    let randomY = () => Math.floor(Math.random() * 1000) + 5
+    let randomXMovement = () => {
+      return anime.random(-`${randomX()}`, `${randomX()}`) + 'rem'
     }
 
-    let randomMovement = () => {
-      return anime.random(-`${randomNum()}`, `${randomNum()}`) + 'rem'
+    let bottomY = {
+      translateY: [
+        { value: randomY() * -1 },
+        { value: randomY() * -1 },
+        { value: randomY() * -1 }
+      ]
     }
 
-    const animeObj = {
+    let topY = {
+      translateY: [
+        { value: randomY() },
+        { value: randomY() },
+        { value: randomY() }
+      ]
+    }
+
+    const baseAnime = {
       targets: '.star',
       translateX: [
-        { value: randomMovement() },
-        { value: randomMovement() },
-        { value: randomMovement() },
-        { value: randomMovement() }
-      ],
-      translateY: [
-        { value: randomNum() * 4 },
-        { value: randomNum() * 8 },
-        { value: randomNum() * 12 }
+        { value: randomXMovement() },
+        { value: randomXMovement() },
+        { value: randomXMovement() },
+        { value: randomXMovement() }
       ],
       opacity: [{ value: 1 }, { value: 0 }],
       easing: 'easeOutSine',
-      duration: 10000,
+      duration: 15000,
       complete: throwPlane
     }
 
-    console.log(animeObj, start)
+    const updatedAnime = Object.assign(
+      {},
+      baseAnime,
+      start === 'bottom' ? bottomY : topY
+    )
 
-    anime(animeObj)
+    console.log(updatedAnime, start)
+
+    anime(updatedAnime)
   }
 
   render() {
