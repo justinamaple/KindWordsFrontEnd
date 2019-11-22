@@ -44,7 +44,7 @@
   "deprecated": false,
   "description": "HTTP status utility",
   "devDependencies": {
-    "csv-parse": "1.2.4",
+    "csv-parse": "4.8.2",
     "eslint": "4.19.1",
     "eslint-config-standard": "11.0.0",
     "eslint-plugin-import": "2.9.0",
