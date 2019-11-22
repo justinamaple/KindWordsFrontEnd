@@ -7,7 +7,7 @@ import './styles/App.scss'
 class App extends Component {
   state = {
     accountId: '',
-    icon: ''
+    icon: '',
   }
 
   setAccountInfo = state => {

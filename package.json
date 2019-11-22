@@ -52,6 +52,7 @@
   "prettier": {
     "jsxSingleQuote": true,
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
